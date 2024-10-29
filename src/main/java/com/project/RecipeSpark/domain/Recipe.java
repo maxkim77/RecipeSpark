@@ -15,19 +15,17 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class AIReview {
+public class Recipe {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long reviewId;
-	
+	@Column(length=255)
+	private String title;
 	@Column(columnDefinition="TEXT")
-	private String recipeInput;
+	private String content;
 	
-	@Column(columnDefinition="TEXT")
-	private String reviewResult;
-	
-	private LocalDateTime createdAt;
-	
+    private LocalDateTime createdAt;
+
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;
