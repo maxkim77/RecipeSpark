@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 public class AnswerVoter {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long Id;
+	private Long answerVoteId;
 	
 	@ManyToOne
 	@JoinColumn(name="questionId")
