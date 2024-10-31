@@ -32,5 +32,5 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 			+ "OR u.username LIKE %:KW% "
 			+ "OR au.username LIKE %:KW% "
 			)
-	List<Question> searchByKeyword(@Param("kw") String keyword);
+	List<Question> findAllByKeyword(@Param("kw") String keyword, Pageable pageable);
 }
