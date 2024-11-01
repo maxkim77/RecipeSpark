@@ -23,14 +23,15 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
 	Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 	
-	@Query("SELECT q FROM Question q"
-			+ "LEFT OUTER JOIN USER u ON Q.authorId=u.userId"
-			+ "LEFT OUTER JOIN Answer a ON a.question=q"
-			+ "LEFT OUTER JOIN User au ON a.author = au.userId"
-			+ "WHERE q.title LIKE %:kw%"
-			+ "OR q.content LIKE %:kw% "
-			+ "OR u.username LIKE %:KW% "
-			+ "OR au.username LIKE %:KW% "
-			)
-	List<Question> findAllByKeyword(@Param("kw") String keyword, Pageable pageable);
+	@Query("SELECT q FROM Question q " +
+		       "LEFT JOIN q.author u " +
+		       "LEFT JOIN q.answerList a " +
+		       "LEFT JOIN a.author au " +
+		       "WHERE q.title LIKE %:kw% " +
+		       "OR q.content LIKE %:kw% " +
+		       "OR u.username LIKE %:kw% " +
+		       "OR au.username LIKE %:kw%")
+		List<Question> findAllByKeyword(@Param("kw") String keyword, Pageable pageable);
+
+
 }

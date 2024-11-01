@@ -1,6 +1,7 @@
 package com.project.RecipeSpark.domain;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Supplier;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -39,6 +40,11 @@ public class Question {
 	
 	@ManyToOne
 	@JoinColumn(name="authorId")
-	private User authorId;
+	private User author;
+
+	public static Question orElseThrow(Supplier<? extends RuntimeException> exceptionSupplier) {
+	    throw exceptionSupplier.get();
+	}
+
 	
 }
