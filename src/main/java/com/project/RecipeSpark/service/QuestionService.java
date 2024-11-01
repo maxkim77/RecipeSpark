@@ -68,23 +68,23 @@ public class QuestionService {
 		}
 	}
 
-	public void create(String title, String content, User user) {
+	public void createQuestion(String title, String content, User author) {
 		Question q = new Question();
 		q.setTitle(title);
 		q.setContent(content);
 		q.setCreateDate(LocalDateTime.now());
-		q.setAuthorId(user);
+		q.setAuthor(author);
 		this.questionRepository.save(q);
 	}
 
-	public void modify(Question question, String title, String content) {
+	public void modifyQuestion(Question question, String title, String content) {
 		question.setTitle(title);
 		question.setContent(content);
 		question.setModifyDate(LocalDateTime.now());
 		this.questionRepository.save(question);
 	}
 
-	public void delete(Question question) {
+	public void deleteQuestion(Question question) {
 		this.questionRepository.delete(question);
 	}
 

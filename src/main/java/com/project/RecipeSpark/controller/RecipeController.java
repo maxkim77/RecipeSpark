@@ -57,7 +57,7 @@ public class RecipeController {
                            RedirectAttributes redirectAttributes) {
         Recipe recipe = recipeService.getRecipeById(recipeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        if (!recipe.getAuthor().getUsername().equals(principal.getName())) {
+        if (!recipe.getUser().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         }
         
@@ -88,7 +88,7 @@ public class RecipeController {
 
         Recipe recipe = recipeService.getRecipeById(recipeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        if (!recipe.getAuthor().getUsername().equals(principal.getName())) {
+        if (!recipe.getUser().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         }
         
@@ -102,7 +102,7 @@ public class RecipeController {
     public String deleteRecipe(@PathVariable Long recipeId, Principal principal) {
         Recipe recipe = recipeService.getRecipeById(recipeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
-        if (!recipe.getAuthor().getUsername().equals(principal.getName())) {
+        if (!recipe.getUser().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
         }
         

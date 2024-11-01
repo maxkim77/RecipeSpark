@@ -12,7 +12,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 	
 	List<Recipe> findByTitleContaining(String title);
 	
-	List<Recipe> findByUserId(Long userId);
+	List<Recipe> findByUserUserId(Long userId); // 수정된 부분
 	
 	Page<Recipe> findAll(Pageable pageable);
 
