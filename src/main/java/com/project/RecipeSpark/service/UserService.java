@@ -38,6 +38,7 @@ public class UserService {
 			}else {
 				throw new DataNotFoundException("site user not found");
 			}
-		}
 	}
+
+}
 	
