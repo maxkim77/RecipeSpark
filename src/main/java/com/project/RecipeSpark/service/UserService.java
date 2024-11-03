@@ -32,12 +32,16 @@ public class UserService {
 	}
 	
 	public User getUser(String username) throws DataNotFoundException{
-		Optional<User> user = this.userRepository.findByusername(username);
+		Optional<User> user = this.userRepository.findByUsername(username);
 		if(user.isPresent()) {
 				return user.get();
 			}else {
 				throw new DataNotFoundException("site user not found");
 			}
+	}
+	
+	public boolean validatePassword(String password1, String password2) {
+		return password1.equals(password2);
 	}
 
 }

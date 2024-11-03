@@ -1,7 +1,11 @@
 package com.project.RecipeSpark.domain;
 
+import com.project.RecipeSpark.security.UserRole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,5 +25,7 @@ public class User {
 	private String password;
 	@Column(unique=true)
 	private String email;
+	 @Enumerated(EnumType.STRING)
+	    private UserRole role; // 이 필드가 있어야 합니다.
 
 }
