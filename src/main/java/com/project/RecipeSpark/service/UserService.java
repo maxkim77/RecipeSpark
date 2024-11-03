@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.RecipeSpark.DataNotFoundException;
 import com.project.RecipeSpark.domain.User;
 import com.project.RecipeSpark.repository.UserRepository;
+import com.project.RecipeSpark.security.UserRole;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,13 +21,13 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	
-	public User create(String username,String email,String password) {
+	public User createUser(String username,String email,String password) {
 		User user = new User();
 		user.setUsername(username);
 		user.setEmail(email);
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 		user.setPassword(passwordEncoder.encode(password));
+		user.setRole(UserRole.USER);
 		this.userRepository.save(user);
 		return user;
 	}

@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>Login</h1>
-	<form action="/auth/login" method="post">
+	<form th:action="@{/users/login}" method="post">
 		<label for="username">Username:</label>
 		<input type="text" id="username" name="username" required>
 		<br>
@@ -15,6 +15,10 @@
 		<br>
 		<button type="submit">Login</button>	
 	</form>
-	<p>Don't have an account<a href="/auth/signup">Sign up</a> </p>
+	<div>
+		<p th:if="${param.error}" style="color:red;">Invalid Username</p>		
+	</div>
+	
+	<p>Don't have an account<a th:href="@{/users/signup}">Sign up</a></p>
 </body>
 </html>
