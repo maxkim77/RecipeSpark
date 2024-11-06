@@ -15,4 +15,9 @@ public class MainController {
 		return "main/index";
 	}
 	
+	@GetMapping("/about")
+	public String about() {
+		return "main/about";
+	}
+	
 }
