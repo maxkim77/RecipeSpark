@@ -3,6 +3,7 @@ package com.project.RecipeSpark.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,8 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/users/signup", "/users/login").permitAll() // 접근 허용 경로
+                .requestMatchers("/", "/about", "/users/signup", "/users/login").permitAll() // 접근 허용 경로 추가
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**").permitAll() // 정적 리소스 허용
                 .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin
@@ -38,4 +40,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+
+
 }
