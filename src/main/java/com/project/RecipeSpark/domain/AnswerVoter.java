@@ -13,16 +13,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AnswerVoter {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long answerVoteId;
-	
-	@ManyToOne
-	@JoinColumn(name="questionId")
-	private Answer answer;
-	
-	@ManyToOne
-	@JoinColumn(name="userId")
-	private User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long answerVoteId;
 
+    @ManyToOne
+    @JoinColumn(name = "answerId")
+    private Answer answer;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 }

@@ -1,14 +1,10 @@
 package com.project.RecipeSpark.repository;
 
-import java.util.List;
-
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.project.RecipeSpark.domain.QuestionVoter;
 
-public interface QuestionVoterRepository extends JpaRepository<QuestionVoter,Long> {
-
-	List<QuestionVoter> findByQuestionQuestionId(Long questionId);
-	
-	List<QuestionVoter> findByUserUserId(Long userId);
+public interface QuestionVoterRepository extends JpaRepository<QuestionVoter, Long> {
+    Optional<QuestionVoter> findByQuestionQuestionIdAndUserUserId(Long long1, Long userId);
+    int countByQuestionQuestionId(Long questionId);
 }

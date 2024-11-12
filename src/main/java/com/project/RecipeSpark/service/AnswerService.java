@@ -50,6 +50,9 @@ public class AnswerService {
     public List<Answer> getAnswersByQuestion(Question question) {
         return answerRepository.findByQuestion(question);
     }
-    
+
+    public Optional<Answer> findByAnswerId(Long answerId) {
+        return answerRepository.findByAnswerId(answerId);
+    }
     
 }
