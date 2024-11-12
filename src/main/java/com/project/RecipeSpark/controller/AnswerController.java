@@ -40,35 +40,34 @@ public class AnswerController {
         redirectAttributes.addFlashAttribute("questionId", questionId);
         return "answer/form";
     }
-    @PreAuthorize("isAuthenticated()")
+
+    
     @PostMapping("/create/{questionId}")
-    public String createAnswer(@PathVariable Integer questionId,
+    @PreAuthorize("isAuthenticated()")
+    public String createAnswer(@PathVariable("questionId") Integer questionId,
                                @Valid AnswerForm answerForm,
                                BindingResult bindingResult,
                                Principal principal,
                                RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("answerForm", answerForm);
-            return "redirect:/answer/create/" + questionId;
+            redirectAttributes.addFlashAttribute("answerForm", answerForm); // 폼 데이터 유지
+            redirectAttributes.addFlashAttribute("bindingResult", bindingResult); // 에러 메시지 유지
+            return "redirect:/question/detail/" + questionId;
         }
 
-        Optional<Question> questionOptional = Optional.ofNullable(questionService.getQuestion(questionId));
-        if (!questionOptional.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found");
-        }
-        
-        Question question = questionOptional.get();
-        User user = userService.getUser(principal.getName());
-        answerService.createAnswer(question, answerForm.getContent(), user);
-        
+        Question question = this.questionService.getQuestion(questionId);
+        User user = this.userService.getUser(principal.getName());
+        this.answerService.createAnswer(question, answerForm.getContent(), user);
+
         return "redirect:/question/detail/" + questionId;
     }
 
 
 
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/editForm/{answerId}")
-    public String editForm(@PathVariable Integer answerId,
+    public String editForm(@PathVariable("answerId") Integer answerId,
                            Principal principal,
                            RedirectAttributes redirectAttributes) {
         Answer answer = answerService.getAnswerById(answerId)
@@ -91,7 +90,7 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{answerId}")
-    public String modifyAnswer(@PathVariable Integer answerId,
+    public String modifyAnswer(@PathVariable("answerId") Integer answerId,
                                @Valid AnswerForm answerForm,
                                BindingResult bindingResult,
                                Principal principal) {
@@ -110,7 +109,10 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/delete/{answerId}")
-    public String deleteAnswer(@PathVariable Integer answerId, Principal principal) {
+    public String deleteAnswer(@PathVariable("answerId") Integer answerId
+    							, Principal principal)
+    {
+    	
         Answer answer = answerService.getAnswerById(answerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found"));
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Answer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Header Include -->
+    <div th:replace="~{layout/header :: header}"></div>
+
+    <!-- Content -->
+    <div class="container my-5">
+        <h1>Edit Answer</h1>
+        <form th:action="@{/answer/modify/{answerId}(answerId=${answerId})}" method="post" th:object="${answerForm}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            
+            <!-- Answer Content -->
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea th:field="*{content}" class="form-control" id="content" rows="5"
+                          placeholder="Edit your answer here"></textarea>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a th:href="@{/question/detail/{questionId}(questionId=${questionId})}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <!-- Footer Include -->
+    <div th:replace="~{layout/footer :: footer}"></div>
+</body>
+</html>

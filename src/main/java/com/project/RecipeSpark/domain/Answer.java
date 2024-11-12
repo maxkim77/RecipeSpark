@@ -12,31 +12,31 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
 public class Answer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "answer_id") // DB 열 이름과 매핑
+    private Long answerId; // 필드 이름을 "id"로 변경
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(columnDefinition = "TEXT")
-	private String content;
-	
-	private int voteCount;  // 투표 수를 기록하는 필드
+    @Column(columnDefinition = "TEXT")
+    private String content;
 
-	private LocalDateTime createDate;
-    
-	private LocalDateTime modifyDate;
-	
-	@ManyToOne
-	@JoinColumn(name="questionId")
-	private Question question;
-	
-	@ManyToOne
-	@JoinColumn(name="authorId")
-	private User author;
-	
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+    private int voteCount;
+
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
+
+    @Column(name = "modify_date")
+    private LocalDateTime modifyDate;
 }

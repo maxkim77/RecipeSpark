@@ -1,6 +1,7 @@
 package com.project.RecipeSpark.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,13 +26,13 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
 	@Query("SELECT q FROM Question q " +
 		       "LEFT JOIN q.author u " +
-		       "LEFT JOIN q.answerList a " +
+		       "LEFT JOIN q.answerList a " + // 필드명을 answerList로 수정
 		       "LEFT JOIN a.author au " +
-		       "WHERE q.title LIKE %:kw% " +
-		       "OR q.content LIKE %:kw% " +
-		       "OR u.username LIKE %:kw% " +
-		       "OR au.username LIKE %:kw%")
-		List<Question> findAllByKeyword(@Param("kw") String keyword, Pageable pageable);
+		       "WHERE q.title LIKE %:kw% OR q.content LIKE %:kw% " +
+		       "OR u.username LIKE %:kw% OR au.username LIKE %:kw%")
+		Page<Question> findAllByKeyword(@Param("kw") String keyword, Pageable pageable);
 
+
+    Optional<Question> findByQuestionId(Long questionId);
 
 }

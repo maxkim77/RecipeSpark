@@ -52,12 +52,17 @@ public class QuestionService {
 		};
 	}
 
+	// QuestionService.java
+
 	public Page<Question> getList(int page, String kw) {
-		List<Sort.Order> sorts = new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate"));
-		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-		return (Page<Question>) this.questionRepository.findAllByKeyword(kw, pageable);
+	    List<Sort.Order> sorts = new ArrayList<>();
+	    sorts.add(Sort.Order.desc("createDate"));
+	    Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+
+	    // 수정된 findAllByKeyword 메서드 호출
+	    return this.questionRepository.findAllByKeyword(kw, pageable);
 	}
+
 
 	public Question getQuestion(Integer id) {
 		Optional<Question> question = this.questionRepository.findById(id);
@@ -88,8 +93,9 @@ public class QuestionService {
 		this.questionRepository.delete(question);
 	}
 
-//	public void vote(Question question, User user) {
-//		question.getVoter().add(user);
-//		this.questionRepository.save(question);
-//	}
+    public Optional<Question> findById(Long questionId) {
+        return questionRepository.findByQuestionId(questionId);
+    }
+
+
 }

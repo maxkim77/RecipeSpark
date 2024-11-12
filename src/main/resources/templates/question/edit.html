@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Header Include -->
+    <div th:replace="layout/header :: header"></div>
+
+    <!-- Content -->
+    <div class="container my-5">
+        <h1 class="mb-4">Edit Question</h1>
+
+        <!-- Edit Form -->
+        <form th:action="@{/question/modify/{id}(id=${questionId})}" method="post" th:object="${questionForm}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" class="form-control" th:field="*{title}" placeholder="Enter the title">
+                <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <textarea id="content" class="form-control" rows="5" th:field="*{content}" placeholder="Enter the content"></textarea>
+                <div class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a th:href="@{/question/detail/{id}(id=${questionId})}" class="btn btn-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Include -->
+    <div th:replace="layout/footer :: footer"></div>
+</body>
+</html>
