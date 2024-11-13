@@ -12,7 +12,7 @@
     <div class="container my-5">
         <h1>Edit Answer</h1>
         <form th:action="@{/answer/modify/{answerId}(answerId=${answerId})}" method="post" th:object="${answerForm}">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             
             <!-- Answer Content -->
             <div class="form-group">

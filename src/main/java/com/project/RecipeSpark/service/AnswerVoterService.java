@@ -2,7 +2,6 @@ package com.project.RecipeSpark.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional;
 
 import com.project.RecipeSpark.domain.Answer;
 import com.project.RecipeSpark.domain.AnswerVoter;
@@ -14,35 +13,46 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AnswerVoterService {
+
     private final AnswerVoterRepository answerVoterRepository;
 
+    @Transactional(readOnly = true)
+    public boolean hasUserVoted(Answer answer, User user) {
+        return answerVoterRepository
+                .findByAnswer_AnswerIdAndUser_UserId(answer.getAnswerId(), user.getUserId())
+                .isPresent();
+    }
+
     @Transactional
-    public void vote(Long answerId, Long userId) {
-        answerVoterRepository.findByAnswer_AnswerIdAndUser_UserId(answerId, userId)
-            .ifPresentOrElse(
-                existingVote -> {
-                    // 이미 투표가 존재하는 경우 처리 로직
-                    System.out.println("이미 투표를 했습니다.");
-                },
-                () -> {
-                    // 새로운 투표 생성
-                    AnswerVoter answerVoter = new AnswerVoter();
+    public void addVote(Answer answer, User user) {
+        if (!hasUserVoted(answer, user)) {
+            AnswerVoter answerVoter = new AnswerVoter();
+            answerVoter.setAnswer(answer);
+            answerVoter.setUser(user);
+            answerVoterRepository.save(answerVoter);
 
-                    // 관계 객체 생성
-                    Answer answer = new Answer();
-                    answer.setAnswerId(answerId);
+            // 투표 수 증가
+            answer.setVoteCount(answer.getVoteCount() + 1);
+        }
+    }
 
-                    User user = new User();
-                    user.setUserId(userId);
+    @Transactional
+    public void removeVote(Answer answer, User user) {
+        answerVoterRepository.findByAnswer_AnswerIdAndUser_UserId(answer.getAnswerId(), user.getUserId())
+                .ifPresent(answerVoter -> {
+                    answerVoterRepository.delete(answerVoter);
 
-                    answerVoter.setAnswer(answer);
-                    answerVoter.setUser(user);
+                    // 투표 수 감소
+                    answer.setVoteCount(answer.getVoteCount() - 1);
+                });
+    }
 
-                    // 저장
-                    answerVoterRepository.save(answerVoter);
-                    System.out.println("새로운 투표를 등록했습니다.");
-                }
-            );
+    @Transactional
+    public void toggleVote(Answer answer, User user) {
+        if (hasUserVoted(answer, user)) {
+            removeVote(answer, user);
+        } else {
+            addVote(answer, user);
+        }
     }
 }
-

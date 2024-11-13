@@ -39,4 +39,9 @@ public class Answer {
 
     @Column(name = "modify_date")
     private LocalDateTime modifyDate;
+    
+    private boolean hasVoted; // 추가된 필드
+
+    
+    
 }
