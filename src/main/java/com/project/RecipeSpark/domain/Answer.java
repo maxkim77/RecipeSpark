@@ -32,7 +32,6 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    private int voteCount;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -40,7 +39,7 @@ public class Answer {
     @Column(name = "modify_date")
     private LocalDateTime modifyDate;
     
-    private boolean hasVoted; // 추가된 필드
+
 
     
     

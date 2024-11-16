@@ -8,18 +8,6 @@
                 <span th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}">Date</span>
             </p>
 
-            <!-- Vote and Unvote Button -->
-            <div class="my-2">
-                <form th:action="@{/answer/vote/toggle}" method="post" style="display:inline;">
-                    <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <input type="hidden" name="answerId" th:value="${answer.answerId}" />
-                    <button type="submit" 
-                            th:classappend="${answer.hasVoted} ? 'btn btn-outline-danger btn-sm' : 'btn btn-outline-success btn-sm'" 
-                            th:text="${answer.hasVoted} ? 'Unvote' : 'Vote'">Vote</button>
-                </form>
-                <span class="badge badge-primary" th:text="'Votes: ' + ${answer.voteCount}">Votes: 0</span>
-            </div>
-
             <!-- Edit and Delete Buttons -->
             <div th:if="${#authentication.name == answer.author.username}" class="mt-2">
                 <a th:href="@{/answer/editForm/{answerId}(answerId=${answer.answerId})}" class="btn btn-warning btn-sm">Edit</a>

@@ -6,10 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.RecipeSpark.domain.Answer;
 import com.project.RecipeSpark.domain.Question;
@@ -33,7 +36,7 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String createAnswer(@RequestParam Integer questionId,
+    public String createAnswer(@RequestParam("questionId") Integer questionId,
                                @Valid AnswerForm answerForm,
                                BindingResult bindingResult,
                                Principal principal) {
@@ -46,11 +49,32 @@ public class AnswerController {
         answerService.createAnswer(question, answerForm.getContent(), user);
 
         return "redirect:/question/detail/" + questionId;
+    } @PreAuthorize("isAuthenticated()")
+    @GetMapping("/editForm/{answerId}")
+    public String editForm(@PathVariable("answerId") Integer answerId,
+                           Principal principal,
+                           RedirectAttributes redirectAttributes) {
+        Answer answer = answerService.getAnswerById(answerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found"));
+
+        checkAuthorization(answer, principal.getName());
+
+        AnswerForm answerForm = new AnswerForm();
+        answerForm.setContent(answer.getContent());
+        redirectAttributes.addFlashAttribute("answerForm", answerForm);
+        redirectAttributes.addFlashAttribute("answerId", answerId);
+
+        return "redirect:/answer/editView";
+    }
+
+    @GetMapping("/editView")
+    public String editView() {
+        return "answer/edit";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/modify")
-    public String modifyAnswer(@RequestParam Integer answerId,
+    @PostMapping("/modify/{answerId}")
+    public String modifyAnswer(@PathVariable("answerId") Integer answerId,
                                @Valid AnswerForm answerForm,
                                BindingResult bindingResult,
                                Principal principal) {
@@ -58,28 +82,34 @@ public class AnswerController {
             return "redirect:/answer/editForm/" + answerId;
         }
 
-        Answer answer = answerService.getAnswerById(answerId.longValue())
+        Answer answer = answerService.getAnswerById(answerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found"));
+
         checkAuthorization(answer, principal.getName());
 
-        answerService.updateAnswerContent(answer, answerForm.getContent());
+        answerService.modifyAnswer(answer, answerForm.getContent());
         return "redirect:/question/detail/" + answer.getQuestion().getQuestionId();
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/delete")
-    public String deleteAnswer(@RequestParam Integer answerId, Principal principal) {
-        Answer answer = answerService.getAnswerById(answerId.longValue())
+    @PostMapping("/delete/{answerId}")
+    public String deleteAnswer(@PathVariable("answerId") Integer answerId
+    							, Principal principal)
+    {
+    	
+        Answer answer = answerService.getAnswerById(answerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found"));
+
         checkAuthorization(answer, principal.getName());
 
         answerService.deleteAnswer(answer);
         return "redirect:/question/detail/" + answer.getQuestion().getQuestionId();
     }
 
+    // 권한 체크 메서드
     private void checkAuthorization(Answer answer, String username) {
         if (!answer.getAuthor().getUsername().equals(username)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정/삭제 권한이 없습니다.");
         }
     }
 }

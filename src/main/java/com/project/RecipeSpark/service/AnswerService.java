@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
-    private final AnswerVoterService answerVoterService;
 
     @Transactional
     public Answer createAnswer(Question question, String content, User author) {
@@ -27,17 +26,16 @@ public class AnswerService {
         answer.setQuestion(question);
         answer.setContent(content);
         answer.setAuthor(author);
-        answer.setVoteCount(0);
         answer.setCreateDate(LocalDateTime.now());
         return answerRepository.save(answer);
     }
 
-    public Optional<Answer> getAnswerById(Long id) {
-        return answerRepository.findById(id.intValue());
+    public Optional<Answer> getAnswerById(Integer id) {
+        return answerRepository.findById(id);
     }
 
     @Transactional
-    public void updateAnswerContent(Answer answer, String content) {
+    public void modifyAnswer(Answer answer, String content) {
         answer.setContent(content);
         answer.setModifyDate(LocalDateTime.now());
         answerRepository.save(answer);
@@ -52,24 +50,8 @@ public class AnswerService {
         return answerRepository.findByQuestion(question);
     }
 
-    public List<Answer> getAnswersByQuestionIdWithVoteStatus(Long questionId, User user) {
-        List<Answer> answers = answerRepository.findByQuestion_QuestionId(questionId);
-
-        // 투표 여부를 설정
-        answers.forEach(answer -> {
-            boolean hasVoted = answerVoterService.hasUserVoted(answer, user);
-            answer.setHasVoted(hasVoted); // 필요 시 설정
-        });
-
-        return answers;
+    public Optional<Answer> findByAnswerId(Long answerId) {
+        return answerRepository.findByAnswerId(answerId);
     }
-
-
-    public void toggleVote(Answer answer, User user) {
-        if (answerVoterService.hasUserVoted(answer, user)) {
-            answerVoterService.removeVote(answer, user);
-        } else {
-            answerVoterService.addVote(answer, user);
-        }
-    }
+    
 }
