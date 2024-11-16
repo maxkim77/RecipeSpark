@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${question.title}">Question Detail</title>
@@ -10,14 +10,32 @@
 
     <!-- Content -->
     <div class="container my-5">
+        <!-- Question Title and Details -->
         <h1 th:text="${question.title}">Question Title</h1>
-        <p class="text-muted">Posted on 
-            <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}">Date</span>
+        <p class="text-muted">
+            Posted on <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}">Date</span>
+            by <span th:text="${question.author.username}">Author</span>
         </p>
         <hr>
         <p th:text="${question.content}">Question Content</p>
 
-        <!-- 수정 및 삭제 버튼 -->
+        <!-- Question Voting Section -->
+        <div class="my-3">
+            <!-- 추천 및 추천 취소 버튼 -->
+            <form th:action="@{/question/vote}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" name="questionId" th:value="${question.questionId}" />
+                <button type="submit" class="btn" 
+                        th:classappend="${hasVoted ? 'btn-outline-danger' : 'btn-outline-success'}"
+                        th:text="${hasVoted ? 'Unvote' : 'Vote'}">
+                    Vote
+                </button>
+            </form>
+            <!-- Display the total vote count -->
+            <span class="badge badge-primary" th:text="'Votes: ' + ${question.voteCount}">Votes: 0</span>
+        </div>
+
+        <!-- Edit and Delete Buttons -->
         <div th:if="${#authentication.name != 'anonymousUser' and question.author.username == #authentication.name}" class="mt-4">
             <a th:href="@{/question/modify/{id}(id=${question.questionId})}" class="btn btn-warning">Edit</a>
             <form th:action="@{/question/delete/{questionId}(questionId=${question.questionId})}" method="post" style="display:inline;">
@@ -27,25 +45,20 @@
         </div>
 
         <hr>
-
-        <!-- 댓글 섹션 -->
-        <h3>Answers</h3>
+		<!-- Answers Section -->
+		<h3>Answers</h3>
 		<div th:replace="~{answer/list :: list(question=${question})}"></div>
 
-        <!-- 댓글 작성 폼 -->
-        <div th:if="${#authentication.name != 'anonymousUser'}" class="mt-5">
-            <h4>Write an Answer</h4>
-            <form th:action="@{/answer/create/{questionId}(questionId=${question.questionId})}" method="post" th:object="${answerForm}">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <div class="form-group">
-                    <textarea th:field="*{content}" class="form-control" rows="5" placeholder="Write your answer here..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Footer Include -->
-    <div th:replace="~{layout/footer :: footer}"></div>
+		<!-- Write an Answer Form -->
+		<div th:if="${#authentication.name != 'anonymousUser'}" class="mt-5">
+		    <h4>Write an Answer</h4>
+		    <form th:action="@{/answer/create}" method="post" th:object="${answerForm}">
+		        <input type="hidden" name="questionId" th:value="${question.questionId}" />
+		        <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		        <div class="form-group">
+		            <textarea th:field="*{content}" class="form-control" rows="5" placeholder="Write your answer here..." required></textarea>
+		        </div>
+		        <button type="submit" class="btn btn-primary">Submit</button>
+		    </form>
+		</div>
 </body>
-</html>

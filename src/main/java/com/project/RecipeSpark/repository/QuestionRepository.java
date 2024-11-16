@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.project.RecipeSpark.domain.Question;
+import com.project.RecipeSpark.domain.QuestionVoter;
+import com.project.RecipeSpark.domain.User;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
@@ -34,5 +36,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 
     Optional<Question> findByQuestionId(Long questionId);
+    @Query("SELECT qv FROM QuestionVoter qv WHERE qv.question = :question AND qv.user = :user")
+    Optional<QuestionVoter> findByQuestionAndUser(@Param("question") Question question, @Param("user") User user);
+
 
 }

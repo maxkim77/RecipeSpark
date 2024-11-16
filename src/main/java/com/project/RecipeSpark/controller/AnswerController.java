@@ -1,7 +1,6 @@
 package com.project.RecipeSpark.controller;
 
 import java.security.Principal;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,37 +35,21 @@ public class AnswerController {
     private final UserService userService;
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/create/{questionId}")
-    public String createForm(@PathVariable Integer questionId, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("questionId", questionId);
-        return "answer/form";
-    }
-
-    
-    @PostMapping("/create/{questionId}")
-    @PreAuthorize("isAuthenticated()")
-    public String createAnswer(@PathVariable("questionId") Integer questionId,
+    @PostMapping("/create")
+    public String createAnswer(@RequestParam("questionId") Integer questionId,
                                @Valid AnswerForm answerForm,
                                BindingResult bindingResult,
-                               Principal principal,
-                               RedirectAttributes redirectAttributes) {
+                               Principal principal) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("answerForm", answerForm); // 폼 데이터 유지
-            redirectAttributes.addFlashAttribute("bindingResult", bindingResult); // 에러 메시지 유지
             return "redirect:/question/detail/" + questionId;
         }
 
-        Question question = this.questionService.getQuestion(questionId);
-        User user = this.userService.getUser(principal.getName());
-        this.answerService.createAnswer(question, answerForm.getContent(), user);
+        Question question = questionService.getQuestion(questionId);
+        User user = userService.getUser(principal.getName());
+        answerService.createAnswer(question, answerForm.getContent(), user);
 
         return "redirect:/question/detail/" + questionId;
-    }
-
-
-
-
-    @PreAuthorize("isAuthenticated()")
+    } @PreAuthorize("isAuthenticated()")
     @GetMapping("/editForm/{answerId}")
     public String editForm(@PathVariable("answerId") Integer answerId,
                            Principal principal,

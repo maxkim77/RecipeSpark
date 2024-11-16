@@ -32,11 +32,15 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    private int voteCount;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
     @Column(name = "modify_date")
     private LocalDateTime modifyDate;
+    
+
+
+    
+    
 }

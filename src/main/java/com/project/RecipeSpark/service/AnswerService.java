@@ -26,7 +26,6 @@ public class AnswerService {
         answer.setQuestion(question);
         answer.setContent(content);
         answer.setAuthor(author);
-        answer.setVoteCount(0);
         answer.setCreateDate(LocalDateTime.now());
         return answerRepository.save(answer);
     }
