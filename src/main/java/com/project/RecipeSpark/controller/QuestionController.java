@@ -51,6 +51,10 @@ public class QuestionController {
         model.addAttribute("question", question);
         model.addAttribute("answerForm", new AnswerForm());
 
+        // 투표 수 추가
+        int voteCount = question.getVoters().size(); // Question 객체에서 투표 수 가져오기
+        model.addAttribute("voteCount", voteCount);
+
         // 현재 사용자의 투표 여부 확인
         if (principal != null) {
             User user = userService.getUser(principal.getName());
@@ -62,6 +66,7 @@ public class QuestionController {
 
         return "question/detail";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")

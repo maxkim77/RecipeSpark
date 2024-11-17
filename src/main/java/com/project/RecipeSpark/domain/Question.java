@@ -40,7 +40,7 @@ public class Question {
     private List<Answer> answerList;
 
     
-    private int voteCount; // 추천 수
+   // private int voteCount; // 추천 수
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<QuestionVoter> voters = new HashSet<>(); // 추천한 사용자와의 관계

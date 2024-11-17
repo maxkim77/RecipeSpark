@@ -1,4 +1,3 @@
-
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${question.title}">Question Detail</title>
@@ -32,7 +31,7 @@
                 </button>
             </form>
             <!-- Display the total vote count -->
-            <span class="badge badge-primary" th:text="'Votes: ' + ${question.voteCount}">Votes: 0</span>
+            <span class="badge badge-primary" th:text="'Votes: ' + ${voteCount != null ? voteCount : 0}">Votes: 0</span>
         </div>
 
         <!-- Edit and Delete Buttons -->
@@ -45,20 +44,22 @@
         </div>
 
         <hr>
-		<!-- Answers Section -->
-		<h3>Answers</h3>
-		<div th:replace="~{answer/list :: list(question=${question})}"></div>
+        <!-- Answers Section -->
+        <h3>Answers</h3>
+        <div th:replace="~{answer/list :: list(question=${question})}"></div>
 
-		<!-- Write an Answer Form -->
-		<div th:if="${#authentication.name != 'anonymousUser'}" class="mt-5">
-		    <h4>Write an Answer</h4>
-		    <form th:action="@{/answer/create}" method="post" th:object="${answerForm}">
-		        <input type="hidden" name="questionId" th:value="${question.questionId}" />
-		        <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-		        <div class="form-group">
-		            <textarea th:field="*{content}" class="form-control" rows="5" placeholder="Write your answer here..." required></textarea>
-		        </div>
-		        <button type="submit" class="btn btn-primary">Submit</button>
-		    </form>
-		</div>
+        <!-- Write an Answer Form -->
+        <div th:if="${#authentication.name != 'anonymousUser'}" class="mt-5">
+            <h4>Write an Answer</h4>
+            <form th:action="@{/answer/create}" method="post" th:object="${answerForm}">
+                <input type="hidden" name="questionId" th:value="${question.questionId}" />
+                <input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <div class="form-group">
+                    <textarea th:field="*{content}" class="form-control" rows="5" placeholder="Write your answer here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 </body>
+</html>

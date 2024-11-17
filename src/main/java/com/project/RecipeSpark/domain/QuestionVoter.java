@@ -25,4 +25,7 @@ public class QuestionVoter {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    
+     private int voteCount; // 추천 수
+
 }
