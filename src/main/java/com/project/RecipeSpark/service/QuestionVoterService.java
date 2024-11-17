@@ -40,7 +40,7 @@ public class QuestionVoterService {
             questionVoterRepository.save(questionVoter);
 
             // 질문의 추천 수 증가
-            question.setVoteCount(question.getVoteCount() + 1);
+            questionVoter.setVoteCount(questionVoter.getVoteCount() + 1);
             questionRepository.save(question); // 변경된 상태 저장
         }
     }
@@ -51,7 +51,7 @@ public class QuestionVoterService {
             QuestionVoter questionVoter = questionVoterRepository.findByQuestionAndUser(question, user);
             questionVoterRepository.delete(questionVoter);
             
-            question.setVoteCount(question.getVoteCount() - 1);
+            questionVoter.setVoteCount(questionVoter.getVoteCount() - 1);
 
     	}
     }
