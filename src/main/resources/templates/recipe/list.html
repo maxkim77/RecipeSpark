@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe List</title>
+</head>
+<body>
+    <h1>Recipe List</h1>
+    <a th:href="@{/recipe/create}">Create New Recipe</a>
+    <ul>
+        <li th:each="recipe : ${recipes}">
+            <a th:href="@{/recipe/detail/{id}(id=${recipe.reviewId})}">
+                <strong th:text="${recipe.title}"></strong>
+            </a>
+            - by <span th:text="${recipe.user.username}"></span> on 
+            <span th:text="${#temporals.format(recipe.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        </li>
+    </ul>
+</body>
+</html>
