@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+.metadata/.plugins/org.eclipse.core.resources/.projects/RecipeSpark/.indexes/history.index
+.metadata/.plugins/org.eclipse.core.resources/.history/7a/70b83d82a3a5001f15c4a617d92bfd3b
+.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/RecipeSpark/2024/11/47/refactorings.history
+.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/RecipeSpark/2024/11/47/refactorings.index
