@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dirs>
+    <entry loc="/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home" stamp="1720971378301"/>
+    <entry loc="/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_21.0.4.v20240802-1551" stamp="1729119736000"/>
+    <entry loc="/Users/gimjeong-won/.sdkman/candidates/java/21.0.3-zulu" stamp="1712647833000"/>
+    <entry loc="/Users/gimjeong-won/.sdkman/candidates/java/11.0.21-amzn" stamp="1696878641000"/>
+    <entry loc="/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_21.0.4.v20240802-1551/jre" stamp="1729119736000"/>
+    <entry loc="/Users/gimjeong-won/Library/Java/JavaVirtualMachines/openjdk-21.0.1/Contents/Home" stamp="1698505563764"/>
+    <entry loc="/Users/gimjeong-won/Library/Java/JavaVirtualMachines/corretto-17.0.12/Contents/Home" stamp="1721202072032"/>
+    <entry loc="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home" stamp="1727683885000"/>
+    <entry loc="/Users/gimjeong-won/.sdkman/candidates/java/17.0.1-zulu" stamp="1634744465000"/>
+</dirs>
