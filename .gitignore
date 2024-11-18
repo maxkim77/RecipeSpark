@@ -1,30 +1,24 @@
-# Help files
 HELP.md
-
-# Gradle
-.gradle/
+.gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# Maven
-.mvn/
-target/
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-# STS (Spring Tool Suite)
+### STS ###
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings/
+.settings
 .springBeans
-.sts4-cache/
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-# IntelliJ IDEA
-.idea/
+### IntelliJ IDEA ###
+.idea
 *.iws
 *.iml
 *.ipr
@@ -32,55 +26,21 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-# NetBeans
+### NetBeans ###
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-# Eclipse
-*.launch
-.settings/
-.metadata/
-bin/
-tmp/
-
-# Visual Studio Code
+### VS Code ###
 .vscode/
-
-# Operating System files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Temporary files
-*.tmp
-*.bak
-*.swp
-*.swo
-*.old
-
-# Spring Boot specific
-.env
-*.env
-*.jks
-*.keystore
-
-# Application properties and profiles (customize if needed)
-application-*.yml
-application-*.yaml
-application-*.properties
-
-# Test output
-/test-output/
-surefire-reports/
-
-# Eclipse metadata files
-.metadata/
-.metadata/*
-.metadata/.log
-.metadata/.plugins/
+.metadata/.plugins/org.eclipse.core.resources/.projects/RecipeSpark/.indexes/history.index
+.metadata/.plugins/org.eclipse.core.resources/.history/7a/70b83d82a3a5001f15c4a617d92bfd3b
+.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/RecipeSpark/2024/11/47/refactorings.history
+.metadata/.plugins/org.eclipse.ltk.core.refactoring/.refactorings/RecipeSpark/2024/11/47/refactorings.index
+/.metadata/.plugins/org.eclipse.core.resources/.projects/RecipeSpark/.indexes/e4/b9/22/81/e7
+*.snap
+/.metadata/.plugins/org.eclipse.core.resources/.history/f4
+/.metadata/.plugins/org.eclipse.core.resources/.history/b6
+/.metadata

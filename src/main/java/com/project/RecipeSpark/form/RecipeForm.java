@@ -19,6 +19,5 @@ public class RecipeForm {
     @NotBlank(message = "내용은 필수 입력 사항입니다.")
     private String content;
 
-    // 이미지 파일 추가
     private MultipartFile image;
 }
