@@ -1,7 +1,10 @@
 package com.project.RecipeSpark.form;
 
+import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +12,13 @@ import lombok.Setter;
 @Setter
 public class RecipeForm {
 
-    @NotEmpty(message = "제목은 필수 항목입니다.")
+    @NotBlank(message = "제목은 필수 입력 사항입니다.")
+    @Size(max = 255, message = "제목은 최대 255자까지 입력할 수 있습니다.")
     private String title;
 
-    @NotEmpty(message = "내용은 필수 항목입니다.")
+    @NotBlank(message = "내용은 필수 입력 사항입니다.")
     private String content;
+
+    // 이미지 파일 추가
+    private MultipartFile image;
 }

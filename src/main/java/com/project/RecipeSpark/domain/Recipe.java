@@ -25,6 +25,9 @@ public class Recipe {
 	private String content;
 	
     private LocalDateTime createdAt;
+    
+    @Column(length = 255)
+    private String imagePath; // 이미지 경로
 
 	@ManyToOne
 	@JoinColumn(name="userId")
