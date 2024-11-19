@@ -1,6 +1,5 @@
 package com.project.RecipeSpark.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
+
+    private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     /**
      * 레시피 ID로 조회
@@ -96,14 +97,21 @@ public class RecipeService {
             throw new RuntimeException("Invalid file type. Only image files are allowed.");
         }
 
-        // 저장 디렉토리 설정
-        String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
+        // 파일 확장자 추출
+        String originalFilename = imageFile.getOriginalFilename();
+        String fileExtension = "";
 
-        // 파일 이름을 UUID로 저장 (한글/특수문자 제거)
-        String fileExtension = imageFile.getOriginalFilename().substring(imageFile.getOriginalFilename().lastIndexOf("."));
+        if (originalFilename != null && originalFilename.contains(".")) {
+            fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        } else {
+            throw new RuntimeException("Invalid file name. File must have an extension.");
+        }
+
+        // 파일 이름 생성 (UUID)
         String fileName = UUID.randomUUID().toString() + fileExtension;
 
-        Path filePath = Paths.get(uploadDir, fileName);
+        // 저장 경로 생성
+        Path filePath = Paths.get(UPLOAD_DIR, fileName);
 
         try {
             // 디렉토리가 없으면 생성
@@ -116,7 +124,6 @@ public class RecipeService {
             throw new RuntimeException("Failed to save image file.", e);
         }
     }
-
 
     /**
      * 모든 레시피 조회

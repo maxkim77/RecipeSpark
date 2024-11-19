@@ -9,7 +9,7 @@
     <a th:href="@{/recipe/create}">Create New Recipe</a>
     <ul>
         <li th:each="recipe : ${recipes}">
-            <a th:href="@{/recipe/detail/{id}(id=${recipe.reviewId})}">
+            <a th:href="@{/recipe/detail/{reviewId}(reviewId=${recipe.reviewId})}">
                 <strong th:text="${recipe.title}"></strong>
             </a>
             - by <span th:text="${recipe.user.username}"></span> on 
