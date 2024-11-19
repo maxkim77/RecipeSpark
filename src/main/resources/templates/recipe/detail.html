@@ -11,6 +11,19 @@
     </p>
     <p>Author: <span th:text="${recipe.user.username}"></span></p>
     <p th:text="${recipe.content}">Recipe Content</p>
-	<img th:src="@{/uploads/{imagePath}(imagePath=${recipe.imagePath.substring('/uploads/'.length())})}" alt="Recipe Image">
+    <img th:src="@{{imagePath}(imagePath=${recipe.imagePath})}" alt="Recipe Image">
+
+    <!-- Edit and Delete buttons -->
+    <div th:if="${#authentication.name == recipe.user.username}">
+        <a th:href="@{/recipe/edit/{reviewId}(reviewId=${recipe.reviewId})}" class="btn btn-primary">Edit</a>
+        <form th:action="@{/recipe/delete/{reviewId}(reviewId=${recipe.reviewId})}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this recipe?')">Delete</button>
+        </form>
+    </div>
+
+    <!-- Back to List -->
+    <div>
+        <a th:href="@{/recipe/list}" class="btn btn-secondary">Back to List</a>
+    </div>
 </body>
 </html>
