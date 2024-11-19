@@ -25,8 +25,6 @@ public class Recipe {
     @Column(length = 255)
     private String imagePath; // 이미지 경로
 
-    @Column(length = 255)
-    private String imagePath; // 이미지 경로
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
