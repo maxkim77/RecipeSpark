@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AI 리뷰 결과</title>
+</head>
+<body>
+    <h1>AI 리뷰 결과</h1>
+    <div>
+        <label>레시피 입력:</label>
+        <p th:text="${aiReview.recipeInput}"></p>
+    </div>
+    <div>
+        <label>AI 리뷰:</label>
+        <p th:text="${aiReview.reviewResult}"></p>
+    </div>
+    <div>
+        <label>생성 날짜:</label>
+        <p th:text="${aiReview.createdAt}"></p>
+    </div>
+    <a href="/my-reviews">내 리뷰 목록으로 돌아가기</a>
+</body>
+</html>
