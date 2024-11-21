@@ -45,3 +45,5 @@ out/
 /.metadata/.plugins/org.eclipse.core.resources/.history/b6
 /.metadata
 /static/uploads/
+
+.env
