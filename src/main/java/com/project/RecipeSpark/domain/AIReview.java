@@ -1,7 +1,6 @@
 package com.project.RecipeSpark.domain;
 
 import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,19 +15,19 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AIReview {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long reviewId;
-	
-	@Column(columnDefinition="TEXT")
-	private String recipeInput;
-	
-	@Column(columnDefinition="TEXT")
-	private String reviewResult;
-	
-	private LocalDateTime createdAt;
-	
-	@ManyToOne
-	@JoinColumn(name="userId")
-	private User user;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long reviewId;
+
+    @Column(columnDefinition="TEXT")
+    private String recipeInput;
+
+    @Column(columnDefinition="TEXT")
+    private String reviewResult;
+
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name="userId")
+    private User user;
 }
