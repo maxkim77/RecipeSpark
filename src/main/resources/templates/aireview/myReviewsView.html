@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>내 레시피 리뷰 목록</title>
+</head>
+<body>
+    <h1>내 레시피 리뷰 목록</h1>
+    <div th:each="review : ${reviews}">
+        <h3 th:text="'리뷰 ID: ' + ${review.reviewId}"></h3>
+        <p>레시피 입력:</p>
+        <p th:text="${review.recipeInput}"></p>
+        <p>AI 리뷰:</p>
+        <p th:text="${review.reviewResult}"></p>
+        <p>생성 날짜: <span th:text="${review.createdAt}"></span></p>
+        <form method="post" th:action="@{/delete-review/{id}(id=${review.reviewId})}">
+            <button type="submit">삭제</button>
+        </form>
+        <hr/>
+    </div>
+</body>
+</html>
