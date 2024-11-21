@@ -10,11 +10,14 @@ version = '0.0.1-SNAPSHOT'
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
+		
 	}
 }
 
 repositories {
     mavenCentral() // Maven Central Repository 명시
+    maven { url 'https://repo.spring.io/snapshot' }
+    
 }
 
 
@@ -41,6 +44,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.3.5'
     implementation 'commons-fileupload:commons-fileupload:1.4'
     implementation 'commons-io:commons-io:2.17.0'
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:0.8.0-SNAPSHOT'
+    
+    implementation 'me.paulschwarz:spring-dotenv:4.0.0'
     
 }
 
