@@ -1,11 +1,8 @@
 package com.project.RecipeSpark.controller;
 
-import java.awt.print.Pageable;
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +19,7 @@ import com.project.RecipeSpark.domain.Recipe;
 import com.project.RecipeSpark.domain.User;
 import com.project.RecipeSpark.form.RecipeForm;
 import com.project.RecipeSpark.service.RecipeService;
+import com.project.RecipeSpark.service.ScrapService;
 import com.project.RecipeSpark.service.UserService;
 
 import jakarta.validation.Valid;
@@ -34,6 +32,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final UserService userService;
+    private final ScrapService scrapService;
 
     /**
      * 레시피 작성 폼 페이지
@@ -88,12 +87,23 @@ public class RecipeController {
      * 레시피 상세 보기 페이지
      */
     @GetMapping("/detail/{reviewId}")
-    public String showRecipeDetail(@PathVariable(name = "reviewId") Long reviewId, Model model) {
+    public String showRecipeDetail(@PathVariable(name = "reviewId") Long reviewId, Model model, Principal principal) {
+        // 레시피 조회
         Recipe recipe = recipeService.getRecipeById(reviewId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
         model.addAttribute("recipe", recipe);
-        return "recipe/detail";
+
+        // 스크랩 여부 확인
+        boolean isScrapped = false;
+        if (principal != null) { // 사용자가 로그인했는지 확인
+            User user = userService.getUser(principal.getName());
+            isScrapped = scrapService.isRecipeScrappedByUser(user, recipe); // 객체 자체를 전달
+        }
+        model.addAttribute("isScrapped", isScrapped);
+
+        return "recipe/detail"; // 템플릿 이름 확인
     }
+
 
     /**
      * 레시피 수정 폼 페이지
