@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -130,5 +135,15 @@ public class RecipeService {
      */
     public List<Recipe> getRecipe() {
         return recipeRepository.findAll();
+    }
+    /**
+     * 페이징된 레시피 목록 조회 (검색 포함)
+     */
+    public Page<Recipe> getPaginatedRecipes(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        if (keyword == null || keyword.isEmpty()) {
+            return recipeRepository.findAll(pageable);
+        }
+        return recipeRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
     }
 }

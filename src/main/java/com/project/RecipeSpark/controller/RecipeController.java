@@ -1,13 +1,20 @@
 package com.project.RecipeSpark.controller;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -62,9 +69,18 @@ public class RecipeController {
      * 레시피 목록 페이지
      */
     @GetMapping("/list")
-    public String showRecipeList(Model model) {
-        List<Recipe> recipes = recipeService.getRecipe();
-        model.addAttribute("recipes", recipes != null ? recipes : List.of());
+    public String showRecipeList(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "12") int size,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
+        Page<Recipe> recipePage = recipeService.getPaginatedRecipes(keyword, page, size);
+
+        model.addAttribute("recipes", recipePage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", recipePage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+
         return "recipe/list";
     }
 

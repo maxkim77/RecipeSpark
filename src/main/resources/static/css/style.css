@@ -135,3 +135,111 @@ body {
 .footer .footer-menu a:last-child {
     border-right: none;
 }
+
+/*recipe -list */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4열 그리드 */
+    gap: 20px; /* 항목 간격 */
+    list-style: none;
+    padding: 0;
+}
+
+.recipe-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.recipe-item:hover {
+    transform: scale(1.05);
+}
+
+.thumbnail {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.recipe-info {
+    padding: 10px;
+}
+
+.recipe-info a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.recipe-info a:hover {
+    text-decoration: underline;
+}
+
+.recipe-info p {
+    margin: 5px 0 0;
+    color: #555;
+}
+
+@media (max-width: 992px) {
+    .recipe-list {
+        grid-template-columns: repeat(3, 1fr); /* 중간 크기 화면에서 3열 */
+    }
+}
+
+@media (max-width: 768px) {
+    .recipe-list {
+        grid-template-columns: repeat(2, 1fr); /* 작은 화면에서 2열 */
+    }
+}
+
+@media (max-width: 480px) {
+    .recipe-list {
+        grid-template-columns: 1fr; /* 모바일 화면에서 1열 */
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .btn, .pagination .page-link {
+    margin: 0 5px;
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    color: #333;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+.pagination .btn.disabled, .pagination .page-link.active {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+.search-form {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+
