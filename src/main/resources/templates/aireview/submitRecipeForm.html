@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>레시피 제출</title>
+    <title>Submit Recipe</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <script>
         function showLoadingMessage() {
             const button = document.getElementById("submitButton");
             button.disabled = true;
-            button.innerText = "응답 생성 중입니다...";
+            button.innerText = "Generating response...";
         }
     </script>
+    <style>
+        .form-container {
+            max-width: 1200px; /* Adjust form width */
+            margin: 0 auto; /* Center alignment */
+        }
+    </style>
 </head>
 <body>
     <!-- Header Include -->
     <header th:replace="~{layout/header :: header}"></header>
 
-    <main class="container mt-5">
-        <h1 class="mb-4">레시피 제출하기</h1>
-        <form method="post" action="/submit-recipe" onsubmit="showLoadingMessage()">
-            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
-            <div class="mb-3">
-                <label for="recipeInput" class="form-label">레시피 입력:</label>
-                <textarea id="recipeInput" name="recipeInput" rows="5" class="form-control"></textarea>
-            </div>
-            <button type="submit" id="submitButton" class="btn btn-primary">AI 리뷰 생성</button>
-        </form>
-        <a href="/my-reviews" class="btn btn-secondary mt-4">내 리뷰 목록으로 돌아가기</a>
+    <main class="container mt-5" style="min-height: 500px;"> <!-- Fixed height applied -->
+        <h1 class="mb-4">Submit Recipe</h1>
+        <div class="form-container">
+            <form method="post" action="/submit-recipe" onsubmit="showLoadingMessage()">
+                <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
+                <div class="mb-3">
+                    <label for="recipeInput" class="form-label">Recipe Input</label>
+                    <textarea id="recipeInput" name="recipeInput" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" id="submitButton" class="btn btn-primary">Generate AI Review</button>
+                    <a href="/my-reviews" class="btn btn-secondary">Back to My Reviews</a>
+                </div>
+            </form>
+        </div>
     </main>
 
     <!-- Footer Include -->
