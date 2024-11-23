@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Scrap List</title>
+</head>
+<body>
+    <header th:replace="~{layout/header :: header}"></header>
+    <main>
+        <h1>Your Scraps</h1>
+        <ul>
+            <li th:each="scrap : ${scraps}">
+                <a th:href="@{/recipe/detail/{id}(id=${scrap.recipe.reviewId})}" th:text="${scrap.recipe.title}"></a>
+                <form th:action="@{/scrap/remove/{id}(id=${scrap.scrapId})}" method="post">
+                    <button type="submit">Remove Scrap</button>
+                </form>
+            </li>
+        </ul>
+    </main>
+    <footer th:replace="~{layout/footer :: footer}"></footer>
+</body>
+</html>
