@@ -3,27 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe Detail</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"> <!-- CSS 파일 경로 -->
 </head>
 <body>
-    <h1 th:text="${recipe.title}">Recipe Title</h1>
-    <p>Created at: 
-        <span th:text="${#temporals.format(recipe.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
-    </p>
-    <p>Author: <span th:text="${recipe.user.username}"></span></p>
-    <p th:text="${recipe.content}">Recipe Content</p>
-    <img th:src="@{{imagePath}(imagePath=${recipe.imagePath})}" alt="Recipe Image">
+    <!-- Header Include -->
+    <header th:replace="~{layout/header :: header}"></header>
 
-    <!-- Edit and Delete buttons -->
-    <div th:if="${#authentication.name == recipe.user.username}">
-        <a th:href="@{/recipe/edit/{reviewId}(reviewId=${recipe.reviewId})}" class="btn btn-primary">Edit</a>
-        <form th:action="@{/recipe/delete/{reviewId}(reviewId=${recipe.reviewId})}" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this recipe?')">Delete</button>
-        </form>
-    </div>
+    <main>
+        <div class="container">
+            <h1 th:text="${recipe.title}">Recipe Title</h1>
+            <p>Created at: 
+                <span th:text="${#temporals.format(recipe.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </p>
+            <p>Author: <span th:text="${recipe.user.username}"></span></p>
+            <p th:text="${recipe.content}">Recipe Content</p>
+            <img th:src="@{{imagePath}(imagePath=${recipe.imagePath})}" alt="Recipe Image" class="recipe-image">
 
-    <!-- Back to List -->
-    <div>
-        <a th:href="@{/recipe/list}" class="btn btn-secondary">Back to List</a>
-    </div>
+            <!-- Edit and Delete buttons -->
+            <div th:if="${#authentication.name == recipe.user.username}" class="action-buttons">
+                <a th:href="@{/recipe/edit/{reviewId}(reviewId=${recipe.reviewId})}" class="btn btn-primary">Edit</a>
+                <form th:action="@{/recipe/delete/{reviewId}(reviewId=${recipe.reviewId})}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this recipe?')">Delete</button>
+                </form>
+            </div>
+
+            <!-- Back to List -->
+            <div>
+                <a th:href="@{/recipe/list}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 </body>
 </html>

@@ -3,18 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Recipe List</h1>
-    <a th:href="@{/recipe/create}">Create New Recipe</a>
-    <ul>
-        <li th:each="recipe : ${recipes}">
-            <a th:href="@{/recipe/detail/{reviewId}(reviewId=${recipe.reviewId})}">
-                <strong th:text="${recipe.title}"></strong>
-            </a>
-            - by <span th:text="${recipe.user.username}"></span> on 
-            <span th:text="${#temporals.format(recipe.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
-        </li>
-    </ul>
+    <!-- Header Include -->
+    <header th:replace="~{layout/header :: header}"></header>
+
+    <main>
+        <div class="container">
+            <h1>Recipe List</h1>
+
+            <!-- Search Form -->
+            <form th:action="@{/recipe/list}" method="get" class="search-form">
+                <input type="text" name="keyword" placeholder="Search recipes..." th:value="${keyword}">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
+
+            <!-- Create New Recipe Button -->
+            <div class="create-recipe">
+                <a th:href="@{/recipe/create}" class="btn btn-primary">Create New Recipe</a>
+            </div>
+
+            <ul class="recipe-list">
+                <li th:each="recipe : ${recipes}" class="recipe-item">
+                    <!-- Thumbnail Image -->
+                    <div class="thumbnail">
+                        <img th:src="@{${recipe.imagePath}}" alt="Recipe Thumbnail" class="thumbnail-img" />
+                    </div>
+                    <!-- Recipe Title -->
+                    <div class="recipe-info">
+                        <a th:href="@{/recipe/detail/{reviewId}(reviewId=${recipe.reviewId})}">
+                            <strong th:text="${recipe.title}"></strong>
+                        </a>
+                        <p>
+                            - by <span th:text="${recipe.user.username}"></span> on 
+                            <span th:text="${#temporals.format(recipe.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a th:href="@{/recipe/list(page=${currentPage - 1}, keyword=${keyword})}" 
+                   th:classappend="${currentPage == 0} ? 'disabled'" class="btn btn-primary">Previous</a>
+                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a th:href="@{/recipe/list(page=${i}, keyword=${keyword})}" 
+                       th:text="${i + 1}" 
+                       th:classappend="${i == currentPage} ? 'active' : ''" class="page-link"></a>
+                </span>
+                <a th:href="@{/recipe/list(page=${currentPage + 1}, keyword=${keyword})}" 
+                   th:classappend="${currentPage + 1 == totalPages} ? 'disabled'" class="btn btn-primary">Next</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Include -->
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 </body>
 </html>
