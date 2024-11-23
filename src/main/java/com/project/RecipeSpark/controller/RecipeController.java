@@ -1,6 +1,7 @@
 package com.project.RecipeSpark.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.project.RecipeSpark.domain.Comment;
 import com.project.RecipeSpark.domain.Recipe;
 import com.project.RecipeSpark.domain.User;
 import com.project.RecipeSpark.form.RecipeForm;
+import com.project.RecipeSpark.service.CommentService;
 import com.project.RecipeSpark.service.RecipeService;
 import com.project.RecipeSpark.service.ScrapService;
 import com.project.RecipeSpark.service.UserService;
@@ -33,6 +36,7 @@ public class RecipeController {
     private final RecipeService recipeService;
     private final UserService userService;
     private final ScrapService scrapService;
+    private final CommentService commentService;
 
     /**
      * 레시피 작성 폼 페이지
@@ -101,9 +105,37 @@ public class RecipeController {
         }
         model.addAttribute("isScrapped", isScrapped);
 
+        // 댓글 추가
+        List<Comment> comments = commentService.getCommentsByRecipe(recipe);
+        model.addAttribute("comments", comments);
+
         return "recipe/detail"; // 템플릿 이름 확인
     }
 
+    /**
+     * 댓글 추가 처리
+     */
+    @PostMapping("/detail/{reviewId}/comment")
+    public String addComment(@PathVariable(name = "reviewId") Long reviewId, @RequestParam String content, Principal principal) {
+        Recipe recipe = recipeService.getRecipeById(reviewId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
+
+        User user = userService.getUser(principal.getName());
+        commentService.addComment(user, recipe, content);
+
+        return "redirect:/recipe/detail/" + reviewId;
+    }
+
+    /**
+     * 댓글 삭제 처리
+     */
+    @PostMapping("/detail/{reviewId}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable(name = "reviewId") Long reviewId, @PathVariable(name = "commentId") Long commentId, Principal principal) {
+        User user = userService.getUser(principal.getName());
+        commentService.deleteComment(commentId, user);
+
+        return "redirect:/recipe/detail/" + reviewId;
+    }
 
     /**
      * 레시피 수정 폼 페이지
