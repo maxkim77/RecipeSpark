@@ -49,7 +49,20 @@ body {
 .navbar-dark .navbar-nav .nav-link.active {
     color: var(--primary) !important;
 }
+.navbar {
+    padding-top: 30px; /* 상단 패딩 */
+    padding-bottom: 30px; /* 하단 패딩 */
+    height: auto; /* 필요 시 높이 설정 */
+}
 
+
+/* 모바일 디바이스에서 패딩 다르게 설정 가능 */
+@media (max-width: 768px) {
+    .navbar {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
 /*** Hero Header ***/
 .hero-header {
     background: linear-gradient(rgba(15, 23, 43, .9), rgba(15, 23, 43, .9)), url('../img/bg-hero.jpg');
