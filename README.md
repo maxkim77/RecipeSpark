@@ -109,12 +109,9 @@
 
 ---
 
-### 2.2 엔터티 관계 모델 기술서 (D8)
-- **이유**: 데이터 중심의 설계를 위해 ERD(Entity-Relationship Diagram)를 작성하고 주요 데이터 구조를 정의하기 위해 작성합니다.
-- **내용**:
-  - 주요 엔터티(Entity)와 속성(Attributes) 정의.
-  - 엔터티 간의 관계(1:1, 1:N, N:N) 정의.
-  - 데이터베이스 설계의 기초가 되는 데이터 모델 작성.
+### 2.2 데이터베이스 설계(ERD)
+![DBERD](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/DB_ERD.png?raw=true)
+
 
 ---
 
