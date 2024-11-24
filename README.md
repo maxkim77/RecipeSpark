@@ -98,6 +98,7 @@
 
 
 ## 1.4 개발 일정 (WBS)
+![image](https://github.com/user-attachments/assets/39ad4ed5-6d3c-42f9-b65f-7a9e74352e6d)
 
 
 ---
@@ -214,7 +215,7 @@
 - Deployment: AWS EC2, RDS (MySQL)
 
 ## 3.2 개발일정
-
+![wbs](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/wbs.png?raw=true)
 
 --- 
 
