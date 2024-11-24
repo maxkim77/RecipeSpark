@@ -111,7 +111,7 @@ Deployment: AWS EC2, RDS (MySQL)
 
 ### 2.1 아키텍처 설계서 
 
-![SystemArchitecture]([https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/SystemArchitecture.png?raw=true])
+![SystemArchitecture](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/SystemArchitecture.png?raw=true)
 
 ---
 
