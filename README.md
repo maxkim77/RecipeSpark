@@ -96,6 +96,16 @@
 | UR-007         | UC-007            | F-007         | 모든 게시판의 열람 기능 제공.             |
 | UR-008         | UC-008            | F-008         | 데이터 보안 및 저장 관리 기능 제공.        |
 
+## 1.4 개발 환경 및 배포
+Backend: Spring Boot, Java 17
+Database: MySQL
+Frontend: Thymeleaf
+API Integration: OpenAI API (ChatGPT)
+Deployment: AWS EC2, RDS (MySQL)
+
+## 1.5 개발 일정 (WBS)
+
+
 ---
 
 ## 3. 기능 상세 설계
@@ -246,13 +256,7 @@ erDiagram
 레시피 게시판: 모든 사용자가 접근 가능, 레시피 조회 및 관리
 Q&A 게시판: 질문과 답변 작성 및 열람 가능
 AI 기능 페이지: 맞춤 레시피 추천 및 변환
-7. 개발 환경 및 배포
-Backend: Spring Boot, Java 17
-Database: MySQL
-Frontend: Thymeleaf
-API Integration: OpenAI API (ChatGPT)
-Deployment: AWS EC2, RDS (MySQL)
-8. 개발 일정 (WBS)
+
 mermaid
 코드 복사
 gantt
