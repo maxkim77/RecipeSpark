@@ -107,175 +107,65 @@ Deployment: AWS EC2, RDS (MySQL)
 
 
 ---
+## 2. 설계
 
-## 3. 기능 상세 설계
+### 2.1 아키텍처 설계서 (D5)
+- **이유**: 시스템의 큰 그림을 그리고, 각 레이어의 역할과 데이터 흐름을 정의하기 위해 작성합니다.
+- **내용**: 
+  - MVC 패턴 기반의 레이어 구조 설계.
+  - 데이터 흐름과 주요 컴포넌트 간 관계 정의.
+  - 시스템 전체의 역할 분담 및 흐름 시각화.
 
-### 3.1. 레시피 게시판 (공개)
-- **CRUD 기능 제공:** 레시피 등록, 조회, 수정, 삭제  
-- 모든 사용자가 등록된 레시피를 열람 가능  
+---
 
-#### API 설계:
+### 2.2 엔터티 관계 모델 기술서 (D8)
+- **이유**: 데이터 중심의 설계를 위해 ERD(Entity-Relationship Diagram)를 작성하고 주요 데이터 구조를 정의하기 위해 작성합니다.
+- **내용**:
+  - 주요 엔터티(Entity)와 속성(Attributes) 정의.
+  - 엔터티 간의 관계(1:1, 1:N, N:N) 정의.
+  - 데이터베이스 설계의 기초가 되는 데이터 모델 작성.
 
-| HTTP Method | URL             | 기능            | 권한         |
-|-------------|-----------------|----------------|--------------|
-| GET         | /recipe         | 레시피 목록 조회 | 공개          |
-| POST        | /recipe         | 레시피 등록      | 로그인 필요   |
-| GET         | /recipe/{id}    | 레시피 상세 조회 | 공개          |
-| PUT         | /recipe/{id}    | 레시피 수정      | 본인만 수정 가능 |
-| DELETE      | /recipe/{id}    | 레시피 삭제      | 본인만 삭제 가능 |
+---
 
-**Controller 코드 예시:**
-```java
-@RestController
-@RequestMapping("/recipe")
-@RequiredArgsConstructor
-public class RecipeController {
+### 2.3 클래스 설계서 (D1)
+- **이유**: ERD를 기반으로 도메인 모델(Entity)을 설계하고, 각 클래스의 속성과 관계를 정의하기 위해 작성합니다.
+- **내용**:
+  - 주요 클래스(Entity)의 속성과 메서드 정의.
+  - 클래스 간의 연관 관계, 상속 구조 등을 설계.
+  - 도메인 로직과 데이터 구조를 기반으로 코드 구현 준비.
 
-    private final RecipeService recipeService;
+---
 
-    @GetMapping
-    public List<Recipe> getAllRecipes() {
-        return recipeService.getAllRecipes();
-    }
+### 2.4 데이터베이스 설계서 (D9)
+- **이유**: ERD를 상세화하여 데이터베이스 테이블 설계와 제약 조건(Primary Key, Foreign Key 등)을 정의하기 위해 작성합니다.
+- **내용**:
+  - 데이터베이스 테이블 스키마 설계.
+  - 테이블 간 관계(Foreign Key, Join) 정의.
+  - 최적화를 위한 데이터베이스 인덱스 설계.
 
-    @PostMapping
-    public Recipe createRecipe(@RequestBody Recipe recipe, Authentication authentication) {
-        recipe.setUsername(authentication.getName());
-        return recipeService.createRecipe(recipe);
-    }
+---
 
-    @GetMapping("/{id}")
-    public Recipe getRecipeById(@PathVariable Long id) {
-        return recipeService.getRecipeById(id);
-    }
+### 2.5 컴포넌트 설계서 (D3)
+- **이유**: Controller, Service, Repository 간의 호출 관계를 정의하고, MVC 계층의 데이터 흐름을 설명하기 위해 작성합니다.
+- **내용**:
+  - 각 레이어의 역할과 책임 정의.
+  - 레이어 간 호출 관계 설계.
+  - 데이터 흐름과 주요 서비스 간 상호작용 정의.
 
-    @PutMapping("/{id}")
-    public Recipe updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe, Authentication authentication) {
-        return recipeService.updateRecipe(id, recipe, authentication.getName());
-    }
+---
 
-    @DeleteMapping("/{id}")
-    public void deleteRecipe(@PathVariable Long id, Authentication authentication) {
-        recipeService.deleteRecipe(id, authentication.getName());
-    }
-}
-3.2. Q&A 게시판 (공개)
-요리에 관한 질문과 답변 기능 제공
-모든 사용자가 자유롭게 질문 및 답변 작성 가능
-API 설계:
-HTTP Method	URL	기능	권한
-GET	/qa	질문 목록 조회	공개
-POST	/qa	질문 등록	로그인 필요
-GET	/qa/{id}	질문 상세 조회	공개
-POST	/qa/{id}/answer	답변 등록	로그인 필요
-3.3. AI 맞춤 레시피 추천 및 변환 기능 (비공개)
-맞춤 레시피 추천: 사용자가 가진 재료를 입력하면 AI가 가능한 레시피를 추천
-레시피 변환: 사용자가 원하는 인분에 맞춰 레시피를 자동으로 변환
-API 설계:
-HTTP Method	URL	기능	권한
-POST	/ai/recommend	맞춤 레시피 추천	로그인 필요
-POST	/ai/convert	레시피 변환	로그인 필요
-Controller 코드 예시:
+### 2.6 인터페이스 설계서 (D4)
+- **이유**: HTTP 요청/응답 구조를 정의하고, API와 데이터를 주고받는 방법을 설계하기 위해 작성합니다.
+- **내용**:
+  - 주요 API 엔드포인트 설계 (URL, HTTP 메서드).
+  - 요청(Request)과 응답(Response) 데이터 형식 정의 (JSON 등).
+  - 외부 시스템과의 통합 방식 정의.
 
-java
-코드 복사
-@RestController
-@RequestMapping("/ai")
-@RequiredArgsConstructor
-public class AIRecipeController {
+---
 
-    private final AIRecipeService aiRecipeService;
-
-    @PostMapping("/recommend")
-    public List<Recipe> recommendRecipes(@RequestBody List<String> ingredients) {
-        return aiRecipeService.recommendRecipes(ingredients);
-    }
-
-    @PostMapping("/convert")
-    public Recipe convertRecipe(@RequestBody Recipe recipe, @RequestParam int servings) {
-        return aiRecipeService.convertRecipe(recipe, servings);
-    }
-}
-4. Spring Security 설정
-SecurityConfig.java:
-
-java
-코드 복사
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/", "/about", "/qa/**", "/recipe/**").permitAll()  // 공개 URL
-            .antMatchers("/ai/**").authenticated()  // 인증 필요
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/")
-            .permitAll()
-            .and()
-            .logout()
-            .logoutSuccessUrl("/")
-            .permitAll();
-    }
-}
-5. 데이터베이스 모델 설계 (ERD)
-mermaid
-코드 복사
-erDiagram
-    User {
-      int id PK
-      varchar username
-      varchar password
-      varchar email
-      datetime created_at
-    }
-    Recipe {
-      int id PK
-      varchar title
-      text instructions
-      varchar username FK
-      datetime created_at
-    }
-    QA {
-      int id PK
-      varchar question
-      text answer
-      varchar username FK
-      datetime created_at
-    }
-
-    User ||--o{ Recipe : "writes"
-    User ||--o{ QA : "asks"
-6. 화면 구성 (UI 설계)
-메인 화면: 최신 레시피와 질문 목록 표시
-레시피 게시판: 모든 사용자가 접근 가능, 레시피 조회 및 관리
-Q&A 게시판: 질문과 답변 작성 및 열람 가능
-AI 기능 페이지: 맞춤 레시피 추천 및 변환
-
-mermaid
-코드 복사
-gantt
-    title RecipeSpark 개발 일정
-    dateFormat  YYYY-MM-DD
-    section 기획
-    요구사항 수집            :active, des1, 2024-10-28, 2d
-    시스템 설계              :des2, after des1, 3d
-    section 개발
-    로그인/회원가입 기능      :dev1, 2024-11-01, 3d
-    레시피 게시판 개발        :dev2, after dev1, 5d
-    Q&A 게시판 개발          :dev3, after dev2, 4d
-    AI 기능 개발             :dev4, after dev3, 5d
-    section 테스트 및 배포
-    통합 테스트              :test1, after dev4, 3d
-    배포 및 최종 점검        :test2, after test1, 2d
-9. 결론
-RecipeSpark는 요리 애호가들이 서로의 레시피를 공유하며 성장할 수 있도록 돕는 플랫폼입니다.
-
-Q&A 게시판을 통해 요리에 대한 궁금증을 해결합니다.
-AI 기능을 통해 맞춤 레시피 추천과 변환을 제공합니다.
-모놀리식 아키텍처로 구현하여 초기 개발과 유지보수가 용이하며, 향후 확장성도 고려했습니다.
+### 2.7 사용자 인터페이스 설계서 (D2)
+- **이유**: UI 화면 설계를 통해 사용자 경험(UX)을 중심으로 화면 레이아웃을 정의하기 위해 작성합니다.
+- **내용**:
+  - 화면 구성 요소(버튼, 입력 폼, 데이터 바인딩 등) 정의.
+  - 페이지 간의 이동 흐름 설계.
+  - 화면 요소의 위치 및 디자인 가이드 작성.
