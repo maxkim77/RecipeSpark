@@ -109,12 +109,9 @@ Deployment: AWS EC2, RDS (MySQL)
 ---
 ## 2. 설계
 
-### 2.1 아키텍처 설계서 (D5)
-- **이유**: 시스템의 큰 그림을 그리고, 각 레이어의 역할과 데이터 흐름을 정의하기 위해 작성합니다.
-- **내용**: 
-  - MVC 패턴 기반의 레이어 구조 설계.
-  - 데이터 흐름과 주요 컴포넌트 간 관계 정의.
-  - 시스템 전체의 역할 분담 및 흐름 시각화.
+### 2.1 아키텍처 설계서 
+
+![SystemArchitecture](https://github.com/maxkim77/RecipeSpark/tmpimg/SystemArchitecture.png)
 
 ---
 
