@@ -103,7 +103,7 @@
 ---
 ## 2. 설계
 
-### 2.1 아키텍처 설계서 
+### 2.1 아키텍처 설계
 
 ![SystemArchitecture](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/SystemArchitecture.png?raw=true)
 
@@ -115,7 +115,7 @@
 
 ---
 
-### 2.3 클래스 설계서 (D1)
+### 2.3 클래스 설계
 ![ClassDiagram](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/classdiagram.png?raw=true)
 
 
@@ -124,7 +124,7 @@
 
 ---
 
-### 2.4 컴포넌트 설계서 (D3)
+### 2.4 컴포넌트 설계
 ![ComponentDiagram](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/componentdiagram.png?raw=true)
   - 각 레이어의 역할과 책임 정의.
   - 레이어 간 호출 관계 설계.
@@ -132,16 +132,77 @@
 
 ---
 
-### 2.6 인터페이스 설계서 (D4)
-- **이유**: HTTP 요청/응답 구조를 정의하고, API와 데이터를 주고받는 방법을 설계하기 위해 작성합니다.
-- **내용**:
-  - 주요 API 엔드포인트 설계 (URL, HTTP 메서드).
-  - 요청(Request)과 응답(Response) 데이터 형식 정의 (JSON 등).
-  - 외부 시스템과의 통합 방식 정의.
+### 2.6 인터페이스 설계 (D4)
+
+- 주요 API 엔드포인트 설계 (URL, HTTP 메서드)
+
+### 2.6.1 AIReviewController
+| HTTP Method | URL                  | 기능                     | 요청 파라미터                               | 응답 결과                         |
+|-------------|----------------------|--------------------------|---------------------------------------------|------------------------------------|
+| POST        | `/submit-recipe`     | AI 리뷰 요청 및 저장       | `recipeInput`(String), `language`(String)   | 리뷰 결과 데이터 및 저장 완료 메시지 |
+| GET         | `/submit-recipe`     | 레시피 입력 폼 페이지     | 없음                                        | 레시피 입력 폼 뷰                  |
+| GET         | `/my-reviews`        | 내 리뷰 목록 조회          | `page`(int), `keyword`(String)             | 리뷰 목록 뷰 및 페이징 처리         |
+| POST        | `/delete-review/{id}`| 특정 리뷰 삭제            | `reviewId`(Long)                           | 삭제 완료 후 리뷰 목록 리다이렉트    |
 
 ---
 
-### 2.7 사용자 인터페이스 설계서 (D2)
+### 2.6.2 AnswerController
+| HTTP Method | URL                          | 기능                        | 요청 파라미터                              | 응답 결과                         |
+|-------------|------------------------------|-----------------------------|--------------------------------------------|------------------------------------|
+| POST        | `/answer/create`             | 답변 생성                    | `questionId`(Integer), `content`(String)  | 답변 생성 후 질문 상세 페이지 리다이렉트 |
+| GET         | `/answer/editForm/{answerId}`| 답변 수정 폼 조회            | `answerId`(Integer)                       | 답변 수정 폼 뷰                   |
+| POST        | `/answer/modify/{answerId}`  | 답변 수정                    | `answerId`(Integer), `content`(String)    | 수정 완료 후 질문 상세 페이지 리다이렉트 |
+| POST        | `/answer/delete/{answerId}`  | 답변 삭제                    | `answerId`(Integer)                       | 삭제 완료 후 질문 상세 페이지 리다이렉트 |
+
+---
+
+### 2.6.3 CommentController
+| HTTP Method | URL                              | 기능                         | 요청 파라미터                              | 응답 결과                         |
+|-------------|----------------------------------|------------------------------|--------------------------------------------|------------------------------------|
+| POST        | `/recipe/{recipeId}/comment`     | 댓글 생성                     | `recipeId`(Long), `content`(String)       | 댓글 생성 후 레시피 상세 페이지 리다이렉트 |
+| GET         | `/recipe/{recipeId}/comment/{id}/edit`| 댓글 수정 폼 조회            | `recipeId`(Long), `commentId`(Long)       | 댓글 수정 폼 뷰                   |
+| POST        | `/recipe/{recipeId}/comment/{id}/edit`| 댓글 수정                    | `recipeId`(Long), `commentId`(Long), `content`(String) | 수정 완료 후 레시피 상세 페이지 리다이렉트 |
+| POST        | `/recipe/{recipeId}/comment/{id}/delete`| 댓글 삭제                   | `recipeId`(Long), `commentId`(Long)       | 삭제 완료 후 레시피 상세 페이지 리다이렉트 |
+
+---
+
+### 2.6.4 MainController
+| HTTP Method | URL       | 기능                         | 요청 파라미터 | 응답 결과              |
+|-------------|-----------|------------------------------|---------------|-------------------------|
+| GET         | `/`       | 메인 페이지로 리다이렉트       | 없음          | 메인 페이지 리다이렉트  |
+| GET         | `/main`   | 메인 페이지 조회              | 없음          | 메인 페이지 뷰          |
+| GET         | `/about`  | 소개 페이지 조회              | 없음          | 소개 페이지 뷰          |
+
+---
+
+### 2.6.5 QuestionController
+| HTTP Method | URL                          | 기능                         | 요청 파라미터                              | 응답 결과                         |
+|-------------|------------------------------|------------------------------|--------------------------------------------|------------------------------------|
+| GET         | `/question/list`            | 질문 목록 조회                | `page`(int), `kw`(String)                 | 질문 목록 뷰 및 페이징 처리         |
+| GET         | `/question/detail/{id}`     | 질문 상세 조회                | `id`(Integer)                             | 질문 상세 뷰                      |
+| GET         | `/question/create`          | 질문 생성 폼 조회             | 없음                                      | 질문 생성 폼 뷰                   |
+| POST        | `/question/create`          | 질문 생성                     | `title`(String), `content`(String)        | 생성 완료 후 질문 목록 페이지 리다이렉트 |
+| GET         | `/question/modify/{id}`     | 질문 수정 폼 조회             | `id`(Integer)                             | 질문 수정 폼 뷰                   |
+| POST        | `/question/modify/{id}`     | 질문 수정                     | `id`(Integer), `title`(String), `content`(String) | 수정 완료 후 질문 상세 페이지 리다이렉트 |
+| POST        | `/question/delete/{id}`     | 질문 삭제                     | `id`(Integer)                             | 삭제 완료 후 질문 목록 페이지 리다이렉트 |
+
+---
+
+### 2.6.6 RecipeController
+| HTTP Method | URL                       | 기능                         | 요청 파라미터                              | 응답 결과                         |
+|-------------|---------------------------|------------------------------|--------------------------------------------|-----------------------------------|
+| GET         | `/recipe/list`           | 레시피 목록 조회              | `page`(int), `size`(int), `keyword`(String) | 레시피 목록 뷰 및 페이징 처리       |
+| GET         | `/recipe/detail/{id}`    | 레시피 상세 조회              | `id`(Long)                                | 레시피 상세 뷰                    |
+| GET         | `/recipe/create`         | 레시피 생성 폼 조회           | 없음                                      | 레시피 생성 폼 뷰                 |
+| POST        | `/recipe/create`         | 레시피 생성                   | `title`(String), `content`(String), `image`(MultipartFile) | 생성 완료 후 레시피 목록 페이지 리다이렉트 |
+| GET         | `/recipe/edit/{id}`      | 레시피 수정 폼 조회           | `id`(Long)                                | 레시피 수정 폼 뷰                 |
+| POST        | `/recipe/edit/{id}`      | 레시피 수정                   | `id`(Long), `title`(String), `content`(String), `image`(MultipartFile) | 수정 완료 후 레시피 목록 페이지 리다이렉트 |
+| POST        | `/recipe/delete/{id}`    | 레시피 삭제                   | `id`(Long)                                | 삭제 완료 후 레시피 목록 페이지 리다이렉트 |
+
+---
+
+
+### 2.7 사용자 인터페이스 설계
 - **이유**: UI 화면 설계를 통해 사용자 경험(UX)을 중심으로 화면 레이아웃을 정의하기 위해 작성합니다.
 - **내용**:
   - 화면 구성 요소(버튼, 입력 폼, 데이터 바인딩 등) 정의.
