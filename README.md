@@ -116,26 +116,16 @@
 ---
 
 ### 2.3 클래스 설계서 (D1)
-- **이유**: ERD를 기반으로 도메인 모델(Entity)을 설계하고, 각 클래스의 속성과 관계를 정의하기 위해 작성합니다.
-- **내용**:
-  - 주요 클래스(Entity)의 속성과 메서드 정의.
+![ClassDiagram](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/classdiagram.png?raw=true)
+
+
   - 클래스 간의 연관 관계, 상속 구조 등을 설계.
   - 도메인 로직과 데이터 구조를 기반으로 코드 구현 준비.
 
 ---
 
-### 2.4 데이터베이스 설계서 (D9)
-- **이유**: ERD를 상세화하여 데이터베이스 테이블 설계와 제약 조건(Primary Key, Foreign Key 등)을 정의하기 위해 작성합니다.
-- **내용**:
-  - 데이터베이스 테이블 스키마 설계.
-  - 테이블 간 관계(Foreign Key, Join) 정의.
-  - 최적화를 위한 데이터베이스 인덱스 설계.
-
----
-
-### 2.5 컴포넌트 설계서 (D3)
-- **이유**: Controller, Service, Repository 간의 호출 관계를 정의하고, MVC 계층의 데이터 흐름을 설명하기 위해 작성합니다.
-- **내용**:
+### 2.4 컴포넌트 설계서 (D3)
+![ComponentDiagram](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/componentdiagram.png?raw=true)
   - 각 레이어의 역할과 책임 정의.
   - 레이어 간 호출 관계 설계.
   - 데이터 흐름과 주요 서비스 간 상호작용 정의.
