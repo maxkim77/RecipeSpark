@@ -144,7 +144,6 @@
 | GET         | `/my-reviews`        | 내 리뷰 목록 조회          | `page`(int), `keyword`(String)             | 리뷰 목록 뷰 및 페이징 처리         |
 | POST        | `/delete-review/{id}`| 특정 리뷰 삭제            | `reviewId`(Long)                           | 삭제 완료 후 리뷰 목록 리다이렉트    |
 
----
 
 ### 2.6.2 AnswerController
 | HTTP Method | URL                          | 기능                        | 요청 파라미터                              | 응답 결과                         |
@@ -154,7 +153,6 @@
 | POST        | `/answer/modify/{answerId}`  | 답변 수정                    | `answerId`(Integer), `content`(String)    | 수정 완료 후 질문 상세 페이지 리다이렉트 |
 | POST        | `/answer/delete/{answerId}`  | 답변 삭제                    | `answerId`(Integer)                       | 삭제 완료 후 질문 상세 페이지 리다이렉트 |
 
----
 
 ### 2.6.3 CommentController
 | HTTP Method | URL                              | 기능                         | 요청 파라미터                              | 응답 결과                         |
@@ -164,7 +162,6 @@
 | POST        | `/recipe/{recipeId}/comment/{id}/edit`| 댓글 수정                    | `recipeId`(Long), `commentId`(Long), `content`(String) | 수정 완료 후 레시피 상세 페이지 리다이렉트 |
 | POST        | `/recipe/{recipeId}/comment/{id}/delete`| 댓글 삭제                   | `recipeId`(Long), `commentId`(Long)       | 삭제 완료 후 레시피 상세 페이지 리다이렉트 |
 
----
 
 ### 2.6.4 MainController
 | HTTP Method | URL       | 기능                         | 요청 파라미터 | 응답 결과              |
@@ -173,7 +170,6 @@
 | GET         | `/main`   | 메인 페이지 조회              | 없음          | 메인 페이지 뷰          |
 | GET         | `/about`  | 소개 페이지 조회              | 없음          | 소개 페이지 뷰          |
 
----
 
 ### 2.6.5 QuestionController
 | HTTP Method | URL                          | 기능                         | 요청 파라미터                              | 응답 결과                         |
@@ -186,7 +182,6 @@
 | POST        | `/question/modify/{id}`     | 질문 수정                     | `id`(Integer), `title`(String), `content`(String) | 수정 완료 후 질문 상세 페이지 리다이렉트 |
 | POST        | `/question/delete/{id}`     | 질문 삭제                     | `id`(Integer)                             | 삭제 완료 후 질문 목록 페이지 리다이렉트 |
 
----
 
 ### 2.6.6 RecipeController
 | HTTP Method | URL                       | 기능                         | 요청 파라미터                              | 응답 결과                         |
@@ -200,7 +195,6 @@
 | POST        | `/recipe/delete/{id}`    | 레시피 삭제                   | `id`(Long)                                | 삭제 완료 후 레시피 목록 페이지 리다이렉트 |
 
 ---
-
 
 ### 2.7 사용자 인터페이스 설계
 - **이유**: UI 화면 설계를 통해 사용자 경험(UX)을 중심으로 화면 레이아웃을 정의하기 위해 작성합니다.
