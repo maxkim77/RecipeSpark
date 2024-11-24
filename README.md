@@ -96,14 +96,8 @@
 | UR-007         | UC-007            | F-007         | 모든 게시판의 열람 기능 제공.             |
 | UR-008         | UC-008            | F-008         | 데이터 보안 및 저장 관리 기능 제공.        |
 
-## 1.4 개발 환경 및 배포
-Backend: Spring Boot, Java 17
-Database: MySQL
-Frontend: Thymeleaf
-API Integration: OpenAI API (ChatGPT)
-Deployment: AWS EC2, RDS (MySQL)
 
-## 1.5 개발 일정 (WBS)
+## 1.4 개발 일정 (WBS)
 
 
 ---
@@ -166,3 +160,25 @@ Deployment: AWS EC2, RDS (MySQL)
   - 화면 구성 요소(버튼, 입력 폼, 데이터 바인딩 등) 정의.
   - 페이지 간의 이동 흐름 설계.
   - 화면 요소의 위치 및 디자인 가이드 작성.
+ 
+
+--- 
+## 3.구현
+
+## 3.1 개발 환경 및 배포
+- Backend: Spring Boot, Java 17
+- Database: MySQL
+- Frontend: Thymeleaf
+- API Integration: OpenAI API (ChatGPT)
+- Deployment: AWS EC2, RDS (MySQL)
+
+## 3.2 개발일정
+
+
+--- 
+
+## 4. 테스트
+### 4.1 단위테스트
+### 4.2 통합테스트
+### 4.3 시스템테스트
+### 4.4 인수테스트 결과 
