@@ -197,8 +197,7 @@
 ---
 
 ### 2.7 사용자 인터페이스 설계
-- **이유**: UI 화면 설계를 통해 사용자 경험(UX)을 중심으로 화면 레이아웃을 정의하기 위해 작성합니다.
-- **내용**:
+![UI/UX](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/RecipeSpark.png?raw=true) 
   - 화면 구성 요소(버튼, 입력 폼, 데이터 바인딩 등) 정의.
   - 페이지 간의 이동 흐름 설계.
   - 화면 요소의 위치 및 디자인 가이드 작성.
