@@ -221,6 +221,58 @@
 
 ## 4. 테스트
 ### 4.1 단위테스트
+# 단위 테스트 결과서
+
+## 1. 테스트 개요
+이 문서에서는 `AIReviewService`, `QuestionService`, `UserService`, `RecipeService` 등의 서비스에 대해 작성된 단위 테스트 케이스의 결과를 정리합니다. 각 테스트는 주요 서비스 로직을 검증하기 위해 작성되었습니다.
+
+## 2. 테스트 케이스
+
+### 2.1 AIReviewService 테스트
+
+| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
+| --------- | ----------- | ------ | --------- | ---- |
+| ATR001 | `generateAIReview` 메서드 | recipeInput = "Test recipe input", user = testUser | 생성된 `AIReview` 객체, 사용자 및 레시피 입력 포함 | Pass |
+| ATR002 | `saveReview` 메서드 | AIReview 객체 | 저장된 `AIReview` 객체 | Pass |
+| ATR003 | `getUserReviews` 메서드 | user = testUser | 해당 사용자에 대한 모든 리뷰 반환 | Pass |
+| ATR004 | `deleteReview` 메서드 | reviewId = 1L | 해당 리뷰 삭제 | Pass |
+| ATR005 | `getUserByUsername` 메서드 | username = "testUser" | 해당 사용자 객체 반환 | Pass |
+
+### 2.2 QuestionService 테스트
+
+| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
+| --------- | ----------- | ------ | --------- | ---- |
+| QSR001 | `getList` 메서드 | keyword = "test", page = 0 | 검색된 질문 리스트 반환 | Pass |
+| QSR002 | `getQuestion` 메서드 | questionId = 1 | 해당 ID의 질문 반환 | Pass |
+| QSR003 | `getQuestionNotFound` 메서드 | questionId = 1 | `DataNotFoundException` 발생 | Pass |
+| QSR004 | `createQuestion` 메서드 | title = "New Question", content = "This is a new question content." | 새로운 질문 생성 | Pass |
+| QSR005 | `modifyQuestion` 메서드 | question 객체, newTitle = "Updated Title", newContent = "Updated Content" | 질문 수정 | Pass |
+| QSR006 | `deleteQuestion` 메서드 | question 객체 | 질문 삭제 | Pass |
+
+### 2.3 UserService 테스트
+
+| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
+| --------- | ----------- | ------ | --------- | ---- |
+| USR001 | `createUser` 메서드 | username = "testUser", email = "test@example.com", password = "password123" | 새 사용자 생성 | Pass |
+| USR002 | `getUser` 메서드 (성공) | username = "testUser" | 해당 사용자 반환 | Pass |
+| USR003 | `getUser` 메서드 (실패) | username = "nonExistingUser" | `DataNotFoundException` 발생 | Pass |
+| USR004 | `validatePassword` 메서드 (성공) | password1 = "password123", password2 = "password123" | true 반환 | Pass |
+| USR005 | `validatePassword` 메서드 (실패) | password1 = "password123", password2 = "differentPassword" | false 반환 | Pass |
+
+### 2.4 RecipeService 테스트
+
+| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
+| --------- | ----------- | ------ | --------- | ---- |
+| RSR001 | `createRecipe` 메서드 | title = "Test Recipe", content = "Test content", user = testUser | 새 레시피 객체 생성 | Pass |
+| RSR002 | `getRecipeById` 메서드 | recipeId = 1L | 해당 ID의 레시피 반환 | Pass |
+| RSR003 | `testSaveImage_InvalidFileType` 메서드 | 잘못된 MIME 타입 | `RuntimeException` 발생 | Pass |
+
+## 3. 테스트 실행 결과 요약
+모든 테스트 케이스가 예상한 대로 성공적으로 수행되었습니다. 주어진 입력값에 대한 적절한 반환 값 및 예외 처리가 확인되었습니다.
+
+## 4. 결론
+테스트 결과 서비스 로직이 예상대로 잘 작동하며, 각 메서드는 입력값에 대해 올바른 출력을 반환하거나, 예외를 올바르게 처리하고 있음을 확인했습니다.
+---
 ### 4.2 통합테스트
 ### 4.3 시스템테스트
 ### 4.4 인수테스트 결과 
