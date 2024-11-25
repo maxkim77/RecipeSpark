@@ -220,69 +220,52 @@
 --- 
 
 ## 4. 테스트
-### 4.1 단위테스트
-# 단위 테스트 결과서
 
-## 1. 테스트 개요
-이 문서에서는 `AIReviewService`, `QuestionService`, `UserService`, `RecipeService` 등의 서비스에 대해 작성된 단위 테스트 케이스의 결과를 정리합니다. 각 테스트는 주요 서비스 로직을 검증하기 위해 작성되었습니다.
+---
 
-## 2. 테스트 케이스
+### 4.1 단위 테스트 결과서
 
-### 2.1 AIReviewService 테스트
+#### 1. 테스트 개요
 
-| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
-| --------- | ----------- | ------ | --------- | ---- |
-| ATR001 | `generateAIReview` 메서드 | recipeInput = "Test recipe input", user = testUser | 생성된 `AIReview` 객체, 사용자 및 레시피 입력 포함 | Pass |
-| ATR002 | `saveReview` 메서드 | AIReview 객체 | 저장된 `AIReview` 객체 | Pass |
-| ATR003 | `getUserReviews` 메서드 | user = testUser | 해당 사용자에 대한 모든 리뷰 반환 | Pass |
-| ATR004 | `deleteReview` 메서드 | reviewId = 1L | 해당 리뷰 삭제 | Pass |
-| ATR005 | `getUserByUsername` 메서드 | username = "testUser" | 해당 사용자 객체 반환 | Pass |
+단위 테스트는 각 서비스 계층(`AIReviewService`, `QuestionService`, `UserService`, `RecipeService`)의 메서드가 예상대로 작동하는지 확인하는 과정입니다. 각 테스트는 주요 기능별로 검증되었습니다.
 
-### 2.2 QuestionService 테스트
+#### 2. 테스트 케이스
 
-| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
-| --------- | ----------- | ------ | --------- | ---- |
-| QSR001 | `getList` 메서드 | keyword = "test", page = 0 | 검색된 질문 리스트 반환 | Pass |
-| QSR002 | `getQuestion` 메서드 | questionId = 1 | 해당 ID의 질문 반환 | Pass |
-| QSR003 | `getQuestionNotFound` 메서드 | questionId = 1 | `DataNotFoundException` 발생 | Pass |
-| QSR004 | `createQuestion` 메서드 | title = "New Question", content = "This is a new question content." | 새로운 질문 생성 | Pass |
-| QSR005 | `modifyQuestion` 메서드 | question 객체, newTitle = "Updated Title", newContent = "Updated Content" | 질문 수정 | Pass |
-| QSR006 | `deleteQuestion` 메서드 | question 객체 | 질문 삭제 | Pass |
+| 테스트 ID | 테스트 대상        | 입력값                          | 예상 출력                        | 결과 |
+| --------- | ----------------- | ------------------------------- | ------------------------------- | ---- |
+| ATR001    | `generateAIReview` | recipeInput = "Test recipe input", user = testUser | 생성된 `AIReview` 객체, 사용자 및 레시피 입력 포함 | Pass |
+| ATR002    | `saveReview`       | AIReview 객체                   | 저장된 `AIReview` 객체          | Pass |
+| ATR003    | `getUserReviews`   | user = testUser                  | 해당 사용자에 대한 모든 리뷰 반환 | Pass |
+| ATR004    | `deleteReview`     | reviewId = 1L                   | 해당 리뷰 삭제                  | Pass |
+| ATR005    | `getUserByUsername`| username = "testUser"            | 해당 사용자 객체 반환          | Pass |
+| QSR001    | `getList`          | keyword = "test", page = 0       | 검색된 질문 리스트 반환        | Pass |
+| QSR002    | `getQuestion`      | questionId = 1                  | 해당 ID의 질문 반환            | Pass |
+| QSR003    | `getQuestionNotFound` | questionId = 1               | `DataNotFoundException` 발생  | Pass |
+| QSR004    | `createQuestion`   | title = "New Question", content = "This is a new question content." | 새로운 질문 생성 | Pass |
+| QSR005    | `modifyQuestion`   | question 객체, newTitle = "Updated Title", newContent = "Updated Content" | 질문 수정 | Pass |
+| QSR006    | `deleteQuestion`   | question 객체                  | 질문 삭제                       | Pass |
+| USR001    | `createUser`       | username = "testUser", email = "test@example.com", password = "password123" | 새 사용자 생성 | Pass |
+| USR002    | `getUser` (성공)   | username = "testUser"            | 해당 사용자 반환               | Pass |
+| USR003    | `getUser` (실패)   | username = "nonExistingUser"     | `DataNotFoundException` 발생  | Pass |
+| USR004    | `validatePassword` (성공) | password1 = "password123", password2 = "password123" | true 반환 | Pass |
+| USR005    | `validatePassword` (실패) | password1 = "password123", password2 = "differentPassword" | false 반환 | Pass |
+| RSR001    | `createRecipe`     | title = "Test Recipe", content = "Test content", user = testUser | 새 레시피 객체 생성 | Pass |
+| RSR002    | `getRecipeById`    | recipeId = 1L                   | 해당 ID의 레시피 반환          | Pass |
+| RSR003    | `testSaveImage_InvalidFileType` | 잘못된 MIME 타입 | `RuntimeException` 발생 | Pass |
 
-### 2.3 UserService 테스트
-
-| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
-| --------- | ----------- | ------ | --------- | ---- |
-| USR001 | `createUser` 메서드 | username = "testUser", email = "test@example.com", password = "password123" | 새 사용자 생성 | Pass |
-| USR002 | `getUser` 메서드 (성공) | username = "testUser" | 해당 사용자 반환 | Pass |
-| USR003 | `getUser` 메서드 (실패) | username = "nonExistingUser" | `DataNotFoundException` 발생 | Pass |
-| USR004 | `validatePassword` 메서드 (성공) | password1 = "password123", password2 = "password123" | true 반환 | Pass |
-| USR005 | `validatePassword` 메서드 (실패) | password1 = "password123", password2 = "differentPassword" | false 반환 | Pass |
-
-### 2.4 RecipeService 테스트
-
-| 테스트 ID | 테스트 대상 | 입력값 | 예상 출력 | 결과 |
-| --------- | ----------- | ------ | --------- | ---- |
-| RSR001 | `createRecipe` 메서드 | title = "Test Recipe", content = "Test content", user = testUser | 새 레시피 객체 생성 | Pass |
-| RSR002 | `getRecipeById` 메서드 | recipeId = 1L | 해당 ID의 레시피 반환 | Pass |
-| RSR003 | `testSaveImage_InvalidFileType` 메서드 | 잘못된 MIME 타입 | `RuntimeException` 발생 | Pass |
-
-## 3. 테스트 실행 결과 요약
+#### 3. 테스트 실행 결과 요약
 모든 테스트 케이스가 예상한 대로 성공적으로 수행되었습니다. 주어진 입력값에 대한 적절한 반환 값 및 예외 처리가 확인되었습니다.
 
-## 4. 결론
+#### 4. 결론
 테스트 결과 서비스 로직이 예상대로 잘 작동하며, 각 메서드는 입력값에 대해 올바른 출력을 반환하거나, 예외를 올바르게 처리하고 있음을 확인했습니다.
+
 ---
-### 4.2 통합테스트
 
-### 4.2.1 `UserService` 통합 테스트
+### 4.2 통합 테스트 결과서
 
-#### 4.2.1.1 테스트 항목
-- **사용자 생성 기능**: `createUser()` 메서드를 사용하여 새로운 사용자가 생성되는지 확인
-- **사용자 조회 기능**: `getUser()` 메서드를 사용하여 사용자 정보를 조회하고 반환값 검증
-- **비밀번호 검증 기능**: `validatePassword()` 메서드를 사용하여 두 비밀번호가 일치하는지 검증
+#### 4.2.1 `UserService` 통합 테스트
 
-#### 4.2.1.2 테스트 결과
+##### 테스트 항목
 
 | 테스트 항목           | 결과       | 상세 설명                                             |
 |--------------------|----------|--------------------------------------------------|
@@ -290,11 +273,7 @@
 | 사용자 조회 (`getUser()`)     | Pass     | 생성된 사용자가 정상적으로 조회됨.                       |
 | 비밀번호 검증 (`validatePassword()`) | Pass     | 두 비밀번호가 일치하면 `true`, 불일치하면 `false` 반환됨.    |
 
-
-### 4.2.2 `AIReviewService` 통합 테스트
-# 통합 테스트 결과서
-
-## 4.2 통합 테스트(Integration Test)
+#### 4.2.2 `AIReviewService` 통합 테스트
 
 | 테스트 항목                  | 목표                                                         | 결과                                                        | 비고                                |
 |----------------------------|------------------------------------------------------------|------------------------------------------------------------|-----------------------------------|
@@ -303,12 +282,45 @@
 | **RecipeService 통합 테스트**    | `RecipeService`의 레시피 생성 및 저장 확인                   | `createRecipe`로 생성된 레시피가 DB에 저장됨                | **성공**: 레시피가 DB에 저장됨         |
 | **UserService 통합 테스트**     | `UserService`의 사용자 생성, 조회 및 비밀번호 검증           | `createUser`로 생성된 사용자와 `validatePassword`가 정상 작동함 | **성공**: 사용자 생성 및 비밀번호 검증 정상 작동  |
 
-## 5. 결론
+#### 5. 결론
 - **전체 결과**: 모든 통합 테스트가 성공적으로 통과하였으며, 각 서비스가 DB와 연동하여 정상적으로 작동함을 확인하였습니다.
 - **다음 단계**: 추가적인 서비스와 기능에 대한 통합 테스트를 진행하고, 테스트 커버리지를 더 확장할 필요가 있습니다.
 
+---
 
+### 4.3 시스템 테스트 결과서
+
+#### 4.3.1 시스템 테스트
+
+| 테스트 항목                  | 목표                                                         | 결과                                                        | 비고                                |
+|----------------------------|------------------------------------------------------------|------------------------------------------------------------|-----------------------------------|
+| **레시피 생성 및 저장**         | 사용자가 레시피를 생성하고 저장하는 기능 검증              | `createRecipe`로 레시피가 DB에 성공적으로 저장됨          | **성공**                           |
+| **사용자 생성 및 조회**        | 사용자가 정상적으로 생성되고 조회되는지 확인               | `createUser`로 사용자가 생성되고 조회됨                   | **성공**                           |
+| **AI 레시피 생성 및 저장**      | AI가 생성한 레시피를 저장하고 조회하는 기능 검증           | `generateAIReview` 및 `saveReview`로 AI 레시피 생성 후 저장됨 | **성공**                           |
+| **질문 생성 및 삭제**          | 사용자가 질문을 생성하고 삭제하는 기능 검증                 | `createQuestion`로 질문 생성 후, `deleteQuestion`으로 삭제됨 | **성공**                           |
+
+#### 4.3.2 결론
+
+- **전체 결과**: 시스템 테스트가 성공적으로 완료되었으며, 모든 주요 기능이 정상적으로 작동함을 확인하였습니다.
+- **다음 단계**: 추가적인 비즈니스 로직 및 더 복잡한 시나리오에 대해 시스템 테스트를 확장할 예정입니다.
 
 ---
-### 4.3 시스템테스트
-### 4.4 인수테스트 결과 
+
+### 4.4 인수 테스트 결과서
+
+#### 4.4.1 인수 테스트
+
+| 테스트 항목                  | 목표                                                         | 결과                                                        | 비고                                |
+|----------------------------|------------------------------------------------------------|------------------------------------------------------------|-----------------------------------|
+| **회원가입 및 로그인**         | 사용자가 회원가입 후 로그인이 정상적으로 이루어지는지 검증   | `createUser`로 사용자가 생성되고 `login`으로 로그인 처리됨 | **성공**                           |
+| **레시피 생성**                | 사용자가 레시피를 생성하는 기능 검증                        | `createRecipe`로 레시피 생성 후, `getRecipeById`로 조회 성공 | **성공**                           |
+| **AI 레시피 생성**             | AI가 생성한 레시피를 저장하고 조회하는 기능 검증            | `generateAIReview` 및 `saveReview`로 AI 레시피 생성 후 저장됨 | **성공**                           |
+| **질문 게시판 생성 및 삭제**   | 사용자가 질문을 생성하고 삭제하는 기능 검증                 | `createQuestion`로 질문 생성 후, `deleteQuestion`으로 삭제됨 | **성공**                           |
+
+#### 4.4.2 결론
+
+- **전체 결과**: 인수 테스트가 성공적으로 완료되었으며, 사용자의 주요 요구사항이 정상적으로 처리됨을 확인하였습니다.
+- **다음 단계**: 추가적인 기능에 대해 인수 테스트를 진행하고, 사용자 경험을 기반으로 한 검증을 강화할 예정입니다.
+
+---
+#5. 시연
