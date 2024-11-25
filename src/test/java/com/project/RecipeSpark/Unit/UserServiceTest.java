@@ -1,4 +1,4 @@
-package com.project.RecipeSpark;
+package com.project.RecipeSpark.Unit;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.project.RecipeSpark.DataNotFoundException;
 import com.project.RecipeSpark.domain.User;
 import com.project.RecipeSpark.repository.UserRepository;
 import com.project.RecipeSpark.service.UserService;

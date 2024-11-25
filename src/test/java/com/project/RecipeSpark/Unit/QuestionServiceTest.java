@@ -1,4 +1,4 @@
-package com.project.RecipeSpark;
+package com.project.RecipeSpark.Unit;
 
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
