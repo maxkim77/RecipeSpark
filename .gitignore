@@ -47,7 +47,7 @@ out/
 /static/uploads/
 
 .env
-
+/src/main/resources/static/uploads
 .metadata
 bin/
 tmp/
