@@ -30,13 +30,17 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        section {
+            min-height: 600px; /* 섹션 최소 높이 설정 */
+        }
     </style>
 </head>
 <body>
     <!-- Header Include -->
     <header th:replace="~{layout/header :: header}"></header>
 
-    <main>
+    <!-- Main Section -->
+    <section>
         <div class="container mt-5">
             <h1 class="mb-4 text-center">Recipe List</h1>
 
@@ -85,7 +89,7 @@
                    th:classappend="${currentPage + 1 == totalPages} ? 'disabled'" class="btn btn-primary">Next</a>
             </div>
         </div>
-    </main>
+    </section>
 
     <!-- Footer Include -->
     <footer th:replace="~{layout/footer :: footer}"></footer>
