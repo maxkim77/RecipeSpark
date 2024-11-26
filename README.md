@@ -326,4 +326,6 @@
 #5. 시연
 - Main & About Page
       - 메인페이지 및 소개페이지
-  ![MainAbout](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/HomeMain.gif?raw=true)
+
+
+![MainAbout](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/HomeMain.gif?raw=true)
