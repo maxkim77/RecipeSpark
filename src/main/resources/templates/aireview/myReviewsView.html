@@ -14,68 +14,74 @@
             word-wrap: break-word; /* 단어가 길 경우 줄바꿈 */
             white-space: pre-wrap; /* 줄바꿈 및 공백 유지 */
         }
+        section {
+            min-height: 600px; /* 최소 높이 설정 */
+        }
     </style>
 </head>
 <body>
     <!-- Header Include -->
     <header th:replace="~{layout/header :: header}"></header>
 
-    <main class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>AI Recipe Reviews</h1>
-            <a th:href="@{/submit-recipe}" class="btn btn-primary">Create Recipe</a>
-        </div>
+    <!-- Main Section -->
+    <section>
+        <main class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>AI Recipe Reviews</h1>
+                <a th:href="@{/submit-recipe}" class="btn btn-primary">Create Recipe</a>
+            </div>
 
-        <!-- Search Form -->
-        <form method="get" th:action="@{/my-reviews}" class="d-flex mb-4 justify-content-end">
-            <input type="text" name="keyword" class="form-control me-2 w-50" placeholder="Search..." th:value="${keyword != null ? keyword : ''}">
-            <button type="submit" class="btn btn-secondary">Search</button>
-        </form>
+            <!-- Search Form -->
+            <form method="get" th:action="@{/my-reviews}" class="d-flex mb-4 justify-content-end">
+                <input type="text" name="keyword" class="form-control me-2 w-50" placeholder="Search..." th:value="${keyword != null ? keyword : ''}">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
 
-        <!-- Review List -->
-        <div class="list-group">
-            <div th:if="${reviews != null && !reviews.isEmpty()}" th:each="review : ${reviews}" class="list-group-item review-card mb-3">
-                <h5 th:text="'Review ID: ' + ${review.reviewId}"></h5>
-                <p><strong>Recipe Input:</strong></p>
-                <p th:text="${review.recipeInput}" class="border p-2 bg-light"></p>
-                <p><strong>AI Review:</strong></p>
-                <p th:text="${review.reviewResult}" class="border p-2 bg-light"></p>
+            <!-- Review List -->
+            <div class="list-group">
+                <div th:if="${reviews != null && !reviews.isEmpty()}" th:each="review : ${reviews}" class="list-group-item review-card mb-3">
+                    <h5 th:text="'Review ID: ' + ${review.reviewId}"></h5>
+                    <p><strong>Recipe Input:</strong></p>
+                    <p th:text="${review.recipeInput}" class="border p-2 bg-light"></p>
+                    <p><strong>AI Review:</strong></p>
+                    <p th:text="${review.reviewResult}" class="border p-2 bg-light"></p>
 
-                <!-- Left-aligned Delete Button and Right-aligned Created At -->
-                <div class="d-flex justify-content-between align-items-center mt-2">
-                    <form method="post" th:action="@{/delete-review/{id}(id=${review.reviewId})}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                    <p class="mb-0">
-                        <strong>Created At:</strong> <span th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}"></span>
-                    </p>
+                    <!-- Left-aligned Delete Button and Right-aligned Created At -->
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <form method="post" th:action="@{/delete-review/{id}(id=${review.reviewId})}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <p class="mb-0">
+                            <strong>Created At:</strong> <span th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}"></span>
+                        </p>
+                    </div>
+                </div>
+                <div th:if="${reviews == null || reviews.isEmpty()}" class="text-center mt-4">
+                    <p>No reviews found.</p>
                 </div>
             </div>
-            <div th:if="${reviews == null || reviews.isEmpty()}" class="text-center mt-4">
-                <p>No reviews found.</p>
-            </div>
-        </div>
 
-        <!-- Pagination -->
-        <nav aria-label="Page navigation" class="mt-4" th:if="${totalPages > 1}">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/my-reviews(page=${currentPage > 0 ? currentPage - 1 : 0}, keyword=${keyword})}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" th:href="@{/my-reviews(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
-                    <a class="page-link" th:href="@{/my-reviews(page=${currentPage + 1 < totalPages ? currentPage + 1 : currentPage}, keyword=${keyword})}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" class="mt-4" th:if="${totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                        <a class="page-link" th:href="@{/my-reviews(page=${currentPage > 0 ? currentPage - 1 : 0}, keyword=${keyword})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                        <a class="page-link" th:href="@{/my-reviews(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+                        <a class="page-link" th:href="@{/my-reviews(page=${currentPage + 1 < totalPages ? currentPage + 1 : currentPage}, keyword=${keyword})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-    </main>
+        </main>
+    </section>
 
     <!-- Footer Include -->
     <footer th:replace="~{layout/footer :: footer}"></footer>
