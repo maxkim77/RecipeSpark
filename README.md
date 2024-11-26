@@ -328,4 +328,4 @@
       - 메인페이지 및 소개페이지
 
 
-![MainAbout](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/HomeMain.gif?raw=true)
+![MainAbout](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/Home&Main%20(2).gif?raw=true)
