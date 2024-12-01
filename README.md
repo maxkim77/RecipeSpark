@@ -323,7 +323,7 @@
 - **다음 단계**: 추가적인 기능에 대해 인수 테스트를 진행하고, 사용자 경험을 기반으로 한 검증을 강화할 예정입니다.
 
 ---
-#5. 시연
+# 5. 시연
 - Main & About Page
       - 메인페이지 및 소개페이지
 
@@ -331,3 +331,9 @@
 ![MainAbout](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/Home&Main%20(2).gif?raw=true)
 
 ![RecipeBoard](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/reipeboard.gif?raw=true)
+
+![Auth](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/Auth.gif?raw=true)
+
+![QNA](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/QNABoard.gif?raw=true)
+
+![AI](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/AIBoard.gif?raw=true)
