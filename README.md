@@ -117,7 +117,7 @@
 ---
 
 ### 2.3 클래스 설계
-![ClassDiagram](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/classdiagram.png?raw=true)
+![ClassDiagram](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/classDiagram.png?raw=true)
 
 
   - 클래스 간의 연관 관계, 상속 구조 등을 설계.
