@@ -364,3 +364,86 @@
     - 검색 기능  
     - Pagination  
     ![AI](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/AIBoard.gif?raw=true)
+
+---
+# 6. 에러 해결 및 느낀점
+
+## 에러 1: No qualifying bean of type 'PasswordEncoder'
+
+## 에러 설명
+Spring Security에서 `PasswordEncoder`를 Bean으로 등록하지 않았을 때 발생하는 오류입니다.
+사용자 비밀번호를 암호화하는 `PasswordEncoder`가 없으면 인증 및 저장 과정에서 실패할 수 있습니다.
+
+## 에러 사유
+Spring Security가 내부적으로 `PasswordEncoder` Bean을 요구하지만, 프로젝트 설정에서 이를 제공하지 않아 발생한 문제입니다.
+
+## 에러 해결 방법
+@Configuration 클래스에 `PasswordEncoder`를 정의하여 Bean으로 등록합니다.
+
+```
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+
+## 에러 2: Could not create query for method... No property 'id' found for type 'User'
+
+### 에러 설명
+Spring Data JPA에서 지정된 쿼리 메서드가 엔티티 필드와 일치하지 않아 발생하는 오류입니다.
+
+### 에러 사유
+엔티티 `User` 클래스의 필드명이 `id`가 아니라 `userId`로 정의되어 있지만, 쿼리 메서드에서 이를 올바르게 반영하지 못한 경우입니다.
+
+### 에러 해결 방법
+엔티티 필드명을 기준으로 쿼리 메서드를 수정합니다.
+
+```
+public interface AnswerVoterRepository extends JpaRepository<AnswerVoter, Long> {
+
+    // 수정 전: findByUserId(Long id)
+    // 수정 후:
+    List<AnswerVoter> findByUserUserId(Long userId);
+}
+
+```
+
+
+## 에러 3: OpenAI API 호출 중 인증 문제
+
+### 에러 설명
+OpenAI API 호출 시 API 키가 누락되거나 잘못 설정되어 인증 문제가 발생
+
+### 에러 사유
+환경 변수로 설정된 API 키가 제대로 로드되지 않거나, `application.properties` 또는 `application.yml` 파일에 설정이 누락된 경우입니다.
+
+### 에러 해결 방법
+
+1. `application.properties` 파일에 다음과 같이 API 키를 설정
+
+```
+spring.ai.openai.api-key=${OPENAI_API_KEY}
+
+```
+
+2. API 키를 환경 변수로 설정
+```
+Linux/macOS:
+export OPENAI_API_KEY=your_api_key
+
+Windows (CMD):
+set OPENAI_API_KEY=your_api_key
+
+```
+
+3. Spring Boot 애플리케이션을 재시작하여 키가 제대로 로드되었는지 확인
+
+## 6.2 느낀점
+
+- Spring Security와 JPA 사용 시 세부 설정이 중요하며, 기본 설정에 의존하지 않고 명확한 코드 작성이 필요함을 깨달음
+- OpenAI API와 같은 외부 서비스를 연동할 때, 환경 변수 및 설정 파일 관리가 애플리케이션의 안정성과 보안성을 크게 좌우한다는 것을 배웠음
+- 스프링 부트 프레임워크를 다루면서 다른 프레임워크에 비해 어렵다고 느꼈는데 막상해보니 시행착오는 많았지만 원하는 기능들을 구현할 수 있었음
