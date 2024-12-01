@@ -430,13 +430,10 @@ spring.ai.openai.api-key=${OPENAI_API_KEY}
 
 ```
 
-2. API 키를 환경 변수로 설정
+2. dot env로 환경변수 설정
 ```
-Linux/macOS:
-export OPENAI_API_KEY=your_api_key
 
-Windows (CMD):
-set OPENAI_API_KEY=your_api_key
+OPENAI_API_KEY=your_api_key
 
 ```
 
