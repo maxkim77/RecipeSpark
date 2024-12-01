@@ -325,11 +325,13 @@
 ---
 # 5. 시연
 - Main & About Page
+  
         - 메인페이지 및 소개페이지
   
 ![MainAbout](https://github.com/maxkim77/RecipeSpark/blob/main/tmpimg/Home&Main%20(2).gif?raw=true)
 
 - Auth & Scrap Page
+  
         - 로그인 기능 구현
         - 로그아웃 기능 구현
         - 회원가입 기능 구현
@@ -339,6 +341,7 @@
 
 
 - Recipe Board Page
+  
         - 게시글 CRUD 기능
         - 댓글 CRUD 기능
         - 검색기능
@@ -348,6 +351,7 @@
 
 
 - QNA Board Page
+  
        - 게시글 CRUD 기능
        - 댓글 CRUD 기능
        - 검색기능
@@ -356,6 +360,7 @@
 
 
 - AI Board Page
+  
         - 레시피 AI 응답생성기능 및 삭제기능
         - 검색 기능
         - Pagination
